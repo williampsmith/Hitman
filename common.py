@@ -169,7 +169,8 @@ class PacketUtils:
             after completion of 3-way handshake, where a censored packet is
             defined as packet that will be blocked by Great Firewall of China.
 
-            ttl: Int | None. If ttl == None, use default (large) ttl.
+            ttl: Int | None. If ttl == None, use default (large) ttl. If
+            ttl != None, use this ttl for packets sent AFTER HANDSHAKE ONLY.
         """
         return "NEED TO IMPLEMENT"
 
