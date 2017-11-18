@@ -193,7 +193,7 @@ class PacketUtils:
         ):
             synack_pkt = self.get_pkt()
 
-        if synack_pkt == None or self.isTimeExceeded(synack_pkt):
+        if synack_pkt == None or isTimeExceeded(synack_pkt):
             return "DEAD"
 
         ack_pkt = self.send_pkt(
@@ -210,7 +210,7 @@ class PacketUtils:
             return "DEAD"
 
         while reply_pkt != None:
-            if self.isTimeExceeded(reply_pkt):
+            if isTimeExceeded(reply_pkt):
                 return "DEAD"
             if isRST(reply_pkt):
                 return "FIREWALL"
