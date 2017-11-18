@@ -198,7 +198,7 @@ class PacketUtils:
 
         ack_pkt = self.send_pkt(
             payload=triggerfetch,
-            flags="A",
+            flags="PA",
             ttl=32,
             seq=synack_pkt[IP][TCP].ack,
             ack=synack_pkt[IP][TCP].seq + 1,
