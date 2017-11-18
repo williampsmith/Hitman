@@ -229,44 +229,73 @@ class PacketUtils:
     # The second list is T/F
     # if there is a RST back for that particular request
     def traceroute(self, target, hops):
-        return "NEED TO IMPLEMENT"
-        # ips = []
-        # resets = []
-        # seq = self._connect_and_handshake(target):
-        # if seq is None:
-        #     return (None, [])
-        # for i in range(hops):
-        #     reset_received = False
-        #     icmp_received = False
-        #     for j in range(3):
-        #         send_kwargs = {
-        #             payload: [], # TODO: change these
-        #             ttl=i,
-        #             flags="",
-        #             seq=seq,
-        #             # ack=None,
-        #             # sport=None,
-        #             # dport=80,
-        #             # ipid=None,
-        #             # dip=None,
-        #             # debug=False,
-        #         }
-        #         self.send_pkt(**send_kwargs)
-        #         response = self.get_pkt()
-        #         seq += 1
-        #         if isICMP(response):
-        #             icmp_received = True
-        #         elif isRST(response):
-        #             reset_received = True
-        #         elif isTimeExceeded(response):
-        #             pass
-        #         else:
-        #             pass
-        #     if icmp_received:
-        #         pass
-        #     if reset_received:
-        #         pass
-        #
-        # if ips == []:
-        #     return (None, [])
-        # return (ips, resets)
+        ips = []
+        resets = []
+        # handshake
+        send_port = random.randrange(2000, 30000)
+        send_seq = random.randint(1, 31313131)
+        syn_pkt = self.send_pkt(
+            flags="S",
+            seq=send_seq,
+            sport=send_port,
+        )
+        synack_pkt = self.get_pkt()
+        while synack_pkt != None and not (
+            isSYNACK(synack_pkt) and
+            synack_pkt[IP][TCP].ack == send_seq + 1
+        ):
+            synack_pkt = self.get_pkt()
+
+        if synack_pkt == None or isTimeExceeded(synack_pkt):
+            return (None, [])
+
+        # final handshake ack
+        pkt = self.send_pkt(
+            flags="A",
+            ttl=32,
+            seq=synack_pkt[IP][TCP].ack,
+            ack=synack_pkt[IP][TCP].seq + 1,
+            sport=send_port,
+        )
+
+        # traceroute packets
+        reply_pkt = synack_pkt
+        for i in range(hops):
+            reset_received = False
+            icmp_received = False
+
+            alive, reset_returned  = True, False
+            for j in range(3):
+                pkt = self.send_pkt(
+                    payload=triggerfetch,
+                    flags="P",
+                    ttl=i,
+                    seq=reply_pkt[IP][TCP].ack,
+                    ack=reply_pkt[IP][TCP].seq + 1,
+                    sport=send_port,
+                )
+                reply_pkt = self.get_pkt()
+                if reply_pkt == None:
+                    break
+
+                while reply_pkt != None:
+                    if isTimeExceeded(reply_pkt):
+                        alive = False
+                        break
+                    elif isICMP(reply_pkt):
+                        print("Received ICMP")
+                        alive = False
+                        break
+                    elif isRST(reply_pkt):
+                        reset_returned = True
+                    reply_pkt = self.get_pkt()
+
+            if alive:
+                ips.append() # TODO: insert hop IP here
+                if reset_received:
+                    resets.append("T")
+                else:
+                    resets.append("F")
+        if ips == []:
+            return (None, [])
+        return (ips, resets)
