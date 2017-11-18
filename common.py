@@ -36,15 +36,15 @@ def isTimeExceeded(p):
     return ICMP in p and p[IP][ICMP].type == 11
 
 def isSYNACK(p):
-    f = p[TCP].flags
+    f = p[IP][TCP].flags
     return (TCP in p) and (((f & SYN) != 0) and ((f & ACK) != 0))
 
 def isSYN(p):
-    f = p[TCP].flags
+    f = p[IP][TCP].flags
     return (TCP in p) and ((f & SYN) != 0)
 
 def isACK(p):
-    f = p[TCP].flags
+    f = p[IP][TCP].flags
     return (TCP in p) and ((f & ACK) != 0)
 
 # A general python object to handle a lot of this stuff...
