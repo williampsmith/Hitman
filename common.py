@@ -179,15 +179,20 @@ class PacketUtils:
     # "FIREWALL" if it is behind the Great Firewall
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
-        send_port = random.randrange(200, 3000)
+        send_port = random.randrange(2000, 30000)
+        seq_num = random.randint(1, 31313131)
         syn_pkt = self.send_pkt(
             flags="S",
+            seq=seq_num,
             sport=send_port,
         )
         send_seq = pkt[IP][TCP].seq
 
         synack_pkt = self.get_pkt()
-        if self.isTimeExceeded(synack_pkt):
+        while synack_pkt != None and !isSYNACK(pkt):
+            synack_pkt = self.get_pkt()
+
+        if synack_pkt == None or self.isTimeExceeded(synack_pkt):
             return "DEAD"
 
 
