@@ -189,7 +189,7 @@ class PacketUtils:
         send_seq = pkt[IP][TCP].seq
 
         synack_pkt = self.get_pkt()
-        while synack_pkt != None and !isSYNACK(pkt):
+        while synack_pkt != None and not isSYNACK(pkt):
             synack_pkt = self.get_pkt()
 
         if synack_pkt == None or self.isTimeExceeded(synack_pkt):
