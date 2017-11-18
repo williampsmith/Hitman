@@ -162,19 +162,14 @@ class PacketUtils:
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
         if self.connect_and_handshake(target):
-            return self._ping(target, 1)
+            return self._ping(target)
 
-    def _ping(self, target, num_packets, ttl=None):
+    def _ping(self, target, ttl=32):
         """
         Helper function for ping method.
 
         Input:
-            num_packets: Int. Number of IDENTICAL censored packets to send
-            after completion of 3-way handshake, where a censored packet is
-            defined as packet that will be blocked by Great Firewall of China.
-
-            ttl: Int | None. If ttl == None, use default (large) ttl. If
-            ttl != None, use this ttl for packets sent AFTER HANDSHAKE ONLY.
+            ttl: Int. time to live for packets sent AFTER HANDSHAKE ONLY.
         """
         return "NEED TO IMPLEMENT"
 
