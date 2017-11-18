@@ -14,7 +14,7 @@ maxhop = 25
 # A request that will trigger the great firewall but will NOT cause
 # the web server to process the connection.  You probably want it here
 
-triggerfetch = """YOU MIGHT WANT SOMETHING HERE"""
+triggerfetch = "GET /search?q=Falun+Gong\nhost: www.google.com\n\n"
 
 FIN = 0x01
 SYN = 0x02
@@ -195,6 +195,7 @@ class PacketUtils:
 
         if synack_pkt == None or self.isTimeExceeded(synack_pkt):
             return "DEAD"
+
 
 
 
