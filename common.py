@@ -158,7 +158,7 @@ class PacketUtils:
     # "FIREWALL" if it is behind the Great Firewall
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
-        return _ping(target, 1)
+        return self._ping(target, 1)
 
     def _ping(self, target, num_packets, ttl=None):
         """
