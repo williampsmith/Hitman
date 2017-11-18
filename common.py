@@ -205,6 +205,16 @@ class PacketUtils:
             sport=send_port,
         )
 
+        reply_pkt = self.get_pkt()
+        while reply_pkt != None:
+            if isRST(reply_pkt):
+                return "FIREWALL"
+            elif isICMP(reply_pkt):
+                pass # TODO: fix this
+            reply_pkt = self.get_pkt()
+
+        return "LIVE"
+
 
 
     # Format is
