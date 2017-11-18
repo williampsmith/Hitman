@@ -187,12 +187,10 @@ class PacketUtils:
             sport=send_port,
         )
         send_seq = pkt[IP][TCP].seq
-
         synack_pkt = self.get_pkt()
-        while (
-            synack_pkt != None and not
-            (isSYNACK(synack_pkt) and
-            synack_pkt[IP][TCP].ack == send_seq + 1)
+        while synack_pkt != None and not (
+            isSYNACK(synack_pkt) and
+            synack_pkt[IP][TCP].ack == send_seq + 1
         ):
             synack_pkt = self.get_pkt()
 
