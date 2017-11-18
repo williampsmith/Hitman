@@ -16,6 +16,15 @@ maxhop = 25
 
 triggerfetch = """YOU MIGHT WANT SOMETHING HERE"""
 
+FIN = 0x01
+SYN = 0x02
+RST = 0x04
+PSH = 0x08
+ACK = 0x10
+URG = 0x20
+ECE = 0x40
+CWR = 0x80
+
 # A couple useful functions that take scapy packets
 def isRST(p):
     return (TCP in p) and (p[IP][TCP].flags & 0x4 != 0)
@@ -25,6 +34,18 @@ def isICMP(p):
 
 def isTimeExceeded(p):
     return ICMP in p and p[IP][ICMP].type == 11
+
+def isSYNACK(p):
+    f = p[TCP].flags
+    return (TCP in p) and (((f & SYN) != 0) and ((f & ACK) != 0))
+
+def isSYN(p):
+    f = p[TCP].flags
+    return (TCP in p) and ((f & SYN) != 0)
+
+def isACK(p):
+    f = p[TCP].flags
+    return (TCP in p) and ((f & ACK) != 0)
 
 # A general python object to handle a lot of this stuff...
 #
