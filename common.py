@@ -180,13 +180,12 @@ class PacketUtils:
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
         send_port = random.randrange(2000, 30000)
-        seq_num = random.randint(1, 31313131)
+        send_seq = random.randint(1, 31313131)
         syn_pkt = self.send_pkt(
             flags="S",
             seq=seq_num,
             sport=send_port,
         )
-        send_seq = pkt[IP][TCP].seq
         synack_pkt = self.get_pkt()
         while synack_pkt != None and not (
             isSYNACK(synack_pkt) and
@@ -196,6 +195,8 @@ class PacketUtils:
 
         if synack_pkt == None or self.isTimeExceeded(synack_pkt):
             return "DEAD"
+
+
 
 
     # Format is
