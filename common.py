@@ -208,14 +208,14 @@ class PacketUtils:
         reply_pkt = self.get_pkt()
         if reply_pkt == None:
             return "DEAD"
-        
+
         while reply_pkt != None:
             if self.isTimeExceeded(reply_pkt):
                 return "DEAD"
             if isRST(reply_pkt):
                 return "FIREWALL"
             elif isICMP(reply_pkt):
-                pass # TODO: fix this
+                print("Received ICMP")
             reply_pkt = self.get_pkt()
 
         return "LIVE"
