@@ -188,7 +188,7 @@ class PacketUtils:
         )
         send_seq = pkt[IP][TCP].seq
 
-        synack_pkt = None
+        synack_pkt = self.get_pkt()
         while synack_pkt != None and not isSYNACK(pkt):
             synack_pkt = self.get_pkt()
 
