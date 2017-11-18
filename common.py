@@ -154,6 +154,10 @@ class PacketUtils:
         return "NEED TO IMPLEMENT"
 
     def _connect_and_handshake(target):
+        """
+        Perform connect and handhshake.
+        Returns the sequence number, or None if unsuccessful.
+        """
         return "NEED TO IMPLEMENT"
 
     # Returns "DEAD" if server isn't alive,
@@ -161,17 +165,11 @@ class PacketUtils:
     # "FIREWALL" if it is behind the Great Firewall
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
-        if self._connect_and_handshake(target):
-            return self._ping(target)
-
-    def _ping(self, target, ttl=32):
-        """
-        Helper function for ping method.
-
-        Input:
-            ttl: Int. time to live for packets sent AFTER HANDSHAKE ONLY.
-        """
-        return "NEED TO IMPLEMENT"
+        seq = self._connect_and_handshake(target)
+        if seq is None:
+            return "DEAD"
+        # TODO: finish this implementation
+        send_pkt(...)
 
     # Format is
     # ([], [])
@@ -182,9 +180,41 @@ class PacketUtils:
     def traceroute(self, target, hops):
         ips = []
         resets = []
-        if not self._connect_and_handshake(target):
+        seq = self._connect_and_handshake(target):
+        if seq is None:
             return (None, [])
         for i in range(hops):
+            reset_received = False
+            icmp_received = False
             for j in range(3):
-                self._ping(target, num_packets=3, ttl=i)
+                send_kwargs = {
+                    payload: [], # TODO: change these
+                    ttl=i,
+                    flags="",
+                    seq=seq,
+                    # ack=None,
+                    # sport=None,
+                    # dport=80,
+                    # ipid=None,
+                    # dip=None,
+                    # debug=False,
+                }
+                self.send_pkt(**send_kwargs)
                 response = self.get_pkt()
+                seq += 1
+                if isICMP(response):
+                    icmp_received = True
+                elif isRST(response):
+                    reset_received = True
+                elif isTimeExceeded(response):
+                    pass
+                else:
+                    pass
+            if icmp_received:
+                pass
+            if reset_received:
+                pass
+
+        if ips == []:
+            return (None, [])
+        return (ips, resets)
