@@ -228,43 +228,44 @@ class PacketUtils:
     # The second list is T/F
     # if there is a RST back for that particular request
     def traceroute(self, target, hops):
-        ips = []
-        resets = []
-        seq = self._connect_and_handshake(target):
-        if seq is None:
-            return (None, [])
-        for i in range(hops):
-            reset_received = False
-            icmp_received = False
-            for j in range(3):
-                send_kwargs = {
-                    payload: [], # TODO: change these
-                    ttl=i,
-                    flags="",
-                    seq=seq,
-                    # ack=None,
-                    # sport=None,
-                    # dport=80,
-                    # ipid=None,
-                    # dip=None,
-                    # debug=False,
-                }
-                self.send_pkt(**send_kwargs)
-                response = self.get_pkt()
-                seq += 1
-                if isICMP(response):
-                    icmp_received = True
-                elif isRST(response):
-                    reset_received = True
-                elif isTimeExceeded(response):
-                    pass
-                else:
-                    pass
-            if icmp_received:
-                pass
-            if reset_received:
-                pass
-
-        if ips == []:
-            return (None, [])
-        return (ips, resets)
+        return "NEED TO IMPLEMENT"
+        # ips = []
+        # resets = []
+        # seq = self._connect_and_handshake(target):
+        # if seq is None:
+        #     return (None, [])
+        # for i in range(hops):
+        #     reset_received = False
+        #     icmp_received = False
+        #     for j in range(3):
+        #         send_kwargs = {
+        #             payload: [], # TODO: change these
+        #             ttl=i,
+        #             flags="",
+        #             seq=seq,
+        #             # ack=None,
+        #             # sport=None,
+        #             # dport=80,
+        #             # ipid=None,
+        #             # dip=None,
+        #             # debug=False,
+        #         }
+        #         self.send_pkt(**send_kwargs)
+        #         response = self.get_pkt()
+        #         seq += 1
+        #         if isICMP(response):
+        #             icmp_received = True
+        #         elif isRST(response):
+        #             reset_received = True
+        #         elif isTimeExceeded(response):
+        #             pass
+        #         else:
+        #             pass
+        #     if icmp_received:
+        #         pass
+        #     if reset_received:
+        #         pass
+        #
+        # if ips == []:
+        #     return (None, [])
+        # return (ips, resets)
