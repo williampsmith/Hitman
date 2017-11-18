@@ -14,7 +14,7 @@ maxhop = 25
 # A request that will trigger the great firewall but will NOT cause
 # the web server to process the connection.  You probably want it here
 
-triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\nhost: www.google.com\n\n"
+triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
 
 FIN = 0x01
 SYN = 0x02
@@ -196,7 +196,14 @@ class PacketUtils:
         if synack_pkt == None or self.isTimeExceeded(synack_pkt):
             return "DEAD"
 
-
+        ack_pkt = self.send_pkt(
+            payload=triggerfetch,
+            flags="A",
+            ttl=32,
+            seq=synack_pkt[IP][TCP].ack,
+            ack=synack_pkt[IP][TCP].seq + 1,
+            sport=send_port,
+        )
 
 
 
