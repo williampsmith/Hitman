@@ -50,10 +50,10 @@ class PacketUtils:
 
         # Get the destination ethernet address with an ARP
         self.arp()
-        
+
         # You can add other stuff in here to, e.g. keep track of
         # outstanding ports, etc.
-        
+
         # Start the packet sniffer
         t = threading.Thread(target=self.run_sniffer)
         t.daemon = True
@@ -152,19 +152,32 @@ class PacketUtils:
     # server itself (from a previous traceroute incantation
     def evade(self, target, msg, ttl):
         return "NEED TO IMPLEMENT"
-        
+
     # Returns "DEAD" if server isn't alive,
     # "LIVE" if teh server is alive,
     # "FIREWALL" if it is behind the Great Firewall
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
+        return _ping(self, target, num_packets=1)
+
+    def _ping(self, target, num_packets, ttl=None):
+        """
+        Helper function for ping method.
+
+        Input:
+            num_packets: Int. Number of IDENTICAL censored packets to send
+            after completion of 3-way handshake, where a censored packet is
+            defined as packet that will be blocked by Great Firewall of China.
+
+            ttl: Int | None. If ttl == None, use default (large) ttl.
+        """
         return "NEED TO IMPLEMENT"
 
     # Format is
     # ([], [])
     # The first list is the list of IPs that have a hop
     # or none if none
-    # The second list is T/F 
+    # The second list is T/F
     # if there is a RST back for that particular request
     def traceroute(self, target, hops):
         return "NEED TO IMPLEMENT"
