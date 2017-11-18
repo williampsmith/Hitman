@@ -183,7 +183,7 @@ class PacketUtils:
         send_seq = random.randint(1, 31313131)
         syn_pkt = self.send_pkt(
             flags="S",
-            seq=seq_num,
+            seq=send_seq,
             sport=send_port,
         )
         synack_pkt = self.get_pkt()
