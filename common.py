@@ -153,7 +153,7 @@ class PacketUtils:
     def evade(self, target, msg, ttl):
         return "NEED TO IMPLEMENT"
 
-    def connect_and_handshake(target):
+    def _connect_and_handshake(target):
         return "NEED TO IMPLEMENT"
 
     # Returns "DEAD" if server isn't alive,
@@ -161,7 +161,7 @@ class PacketUtils:
     # "FIREWALL" if it is behind the Great Firewall
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
-        if self.connect_and_handshake(target):
+        if self._connect_and_handshake(target):
             return self._ping(target)
 
     def _ping(self, target, ttl=32):
@@ -182,9 +182,9 @@ class PacketUtils:
     def traceroute(self, target, hops):
         ips = []
         resets = []
-        if not self.connect_and_handshake(target):
+        if not self._connect_and_handshake(target):
             return (None, [])
         for i in range(hops):
-            self._ping(target, num_packets=3, ttl=i)
             for j in range(3):
+                self._ping(target, num_packets=3, ttl=i)
                 response = self.get_pkt()
