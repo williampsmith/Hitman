@@ -291,12 +291,7 @@ class PacketUtils:
                 next_pkt = self.get_pkt()
 
             if alive:
-                if icmp_ip != None:
-                    ips.append(icmp_ip)
-                    resets.append(reset_returned)
-                else:
-                    # no longer need to check, as we've hopped
-                    # all the way to the server
-                    break
+                ips.append(icmp_ip)
+                resets.append(reset_returned)
 
         return (ips, resets)
