@@ -9,7 +9,7 @@ import json
 import Queue
 import interfaces
 
-maxhop = 25
+maxhop = 30 #25
 
 # A request that will trigger the great firewall but will NOT cause
 # the web server to process the connection.  You probably want it here
