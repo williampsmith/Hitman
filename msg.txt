@@ -1,5 +1,4 @@
 GET / HTTP/1.1
-host: www-inst.eecs.berkeley.edu
 connection: close
-
+host: www.miit.gov.cn
 
