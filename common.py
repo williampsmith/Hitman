@@ -273,9 +273,10 @@ class PacketUtils:
 
             alive, reset_returned = False, "F"
             icmp_ip = None
-            reply_pkt = self.get_pkt()
+            next_pkt = self.get_pkt()
 
-            while reply_pkt != None:
+            while next_pkt != None:
+                reply_pkt = next_pkt
                 if not isTimeExceeded(reply_pkt):
                     alive = True
                 if isICMP(reply_pkt):
@@ -283,7 +284,7 @@ class PacketUtils:
                 elif isRST(reply_pkt):
                     reset_returned = "T"
 
-                reply_pkt = self.get_pkt()
+                next_pkt = self.get_pkt()
 
             if alive:
                 if icmp_ip:
