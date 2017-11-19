@@ -276,13 +276,15 @@ class PacketUtils:
             next_pkt = self.get_pkt()
 
             while next_pkt != None:
-                reply_pkt = next_pkt
-                if not isTimeExceeded(reply_pkt):
+                if not isTimeExceeded(next_pkt):
                     alive = True
-                if isICMP(reply_pkt):
-                    icmp_ip = reply_pkt[IP].src
-                elif isRST(reply_pkt):
+                if isICMP(next_pkt):
+                    icmp_ip = next_pkt[IP].src
+                elif isRST(next_pkt):
                     reset_returned = "T"
+                    reply_pkt = next_pkt
+                else:
+                    reply_pkt = next_pkt
 
                 next_pkt = self.get_pkt()
 
