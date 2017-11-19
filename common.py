@@ -210,13 +210,13 @@ class PacketUtils:
                 sport=send_port,
             )
 
-            # pkt = self.send_pkt(
-            #     payload=rand_msg,
-            #     ttl=ttl,
-            #     flags="P",
-            #     seq=send_seq+seq_offset,
-            #     sport=send_port,
-            # )
+            pkt = self.send_pkt(
+                payload=rand_msg,
+                ttl=ttl,
+                flags="P",
+                seq=send_seq+seq_offset,
+                sport=send_port,
+            )
 
             seq_offset += chunk_size
 
