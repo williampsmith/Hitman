@@ -259,7 +259,8 @@ class PacketUtils:
         stop_time = time.time() + 5.0
 
         while (time.time() < stop_time):
-            pkt = self.get_pkt(timeout=(stop_time - time.time()))
+            # pkt = self.get_pkt(timeout=(stop_time - time.time()))
+            pkt = self.get_pkt(timeout = -1)
             if pkt != None:
                 if 'Raw' in pkt:
                     result += pkt['Raw'].load
