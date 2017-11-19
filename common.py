@@ -233,6 +233,15 @@ class PacketUtils:
 
             seq_offset += len(payload)
 
+        pkt = self.get_pkt()
+        self.send_pkt(
+            flags="A",
+            ttl=32,
+            seq=pkt[IP][TCP].ack,
+            ack=pkt[IP][TCP].seq + 1,
+            sport=send_port,
+        )
+
         return None
 
     # Returns "DEAD" if server isn't alive,
