@@ -12,9 +12,9 @@ def print_tr(path, status):
                                msg,
                                path[x])
 
-    
+
 if __name__ == '__main__':
-    # www.miit.gov.cn                                                           
+    # www.miit.gov.cn
     target = "202.106.121.6"
 
     myip = None
@@ -24,9 +24,5 @@ if __name__ == '__main__':
         target = sys.argv[1]
 
     tr = common.PacketUtils(dst=target)
-    res = tr.traceroute(target, 24)
+    res = tr.traceroute(target, 30)
     print_tr(res[0], res[1])
-    
-
-
-
