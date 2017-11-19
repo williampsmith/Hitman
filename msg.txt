@@ -1,3 +1,1 @@
-GET /search?q=Falun%20Gong HTTP/1.1
-host: www.google.com
-
+GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n
