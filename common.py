@@ -231,7 +231,7 @@ class PacketUtils:
                 # )
 
             seq_offset += len(payload)
-
+        self.get_pkt()
         return None
 
     # Returns "DEAD" if server isn't alive,
