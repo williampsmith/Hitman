@@ -205,7 +205,7 @@ class PacketUtils:
 
             pkt = self.send_pkt(
                 payload=payload,
-                flags="P",
+                flags="PA",
                 seq=send_seq+seq_offset,
                 sport=send_port,
             )
