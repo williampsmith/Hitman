@@ -271,7 +271,7 @@ class PacketUtils:
                     sport=send_port,
                 )
 
-            alive, reset_returned = False, "F"
+            alive, reset_returned = False, False
             icmp_ip = None
             next_pkt = self.get_pkt()
 
@@ -281,7 +281,7 @@ class PacketUtils:
                 if isICMP(next_pkt):
                     icmp_ip = next_pkt[IP].src
                 elif isRST(next_pkt):
-                    reset_returned = "T"
+                    reset_returned = True
                     reply_pkt = next_pkt
                 else:
                     reply_pkt = next_pkt
@@ -297,6 +297,4 @@ class PacketUtils:
                     # all the way to the server
                     break
 
-        if ips == []:
-            return (None, [])
         return (ips, resets)
