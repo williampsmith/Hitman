@@ -212,6 +212,7 @@ class PacketUtils:
                     payload=payload,
                     flags="P",
                     seq=send_seq+seq_offset,
+                    ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
                 )
             else:
