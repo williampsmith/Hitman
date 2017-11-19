@@ -280,7 +280,7 @@ class PacketUtils:
                     alive = True
 
                 if isICMP(reply_pkt):
-                    icmp_ip = reply_pkt[IP][ICMP].src
+                    icmp_ip = reply_pkt[IP].src
                 elif isRST(reply_pkt):
                     reset_returned = "T"
 
