@@ -369,7 +369,7 @@ class PacketUtils:
                 )
                 seq_offset += len(triggerfetch)
 
-            alive, reset_returned = False, False
+            reset_returned = False
             icmp_ip = None
             next_pkt = self.get_pkt(timeout=10)
 
