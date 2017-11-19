@@ -1,3 +1,3 @@
 GET / HTTP/1.1
-host: www.miit.gov.cn
+host: www.google.com
 
