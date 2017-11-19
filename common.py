@@ -190,17 +190,16 @@ class PacketUtils:
         ):
             synack_pkt = self.get_pkt()
 
-        pkt = self.send_pkt(
-            flags="A",
-            ttl=32,
-            seq=synack_pkt[IP][TCP].ack,
-            ack=synack_pkt[IP][TCP].seq + 1,
-            sport=send_port,
-        )
+        # pkt = self.send_pkt(
+        #     flags="A",
+        #     ttl=32,
+        #     seq=synack_pkt[IP][TCP].ack,
+        #     ack=synack_pkt[IP][TCP].seq + 1,
+        #     sport=send_port,
+        # )
 
         seq_offset = 1
-        msg = triggerfetch
-        chunk_size = len(triggerfetch)
+        chunk_size = 10
         letters = "abcdefghijklmnopqrstuvwxyz"
         while len(msg) > 0:
             payload = msg[:chunk_size]
@@ -211,14 +210,14 @@ class PacketUtils:
             pkt = self.send_pkt(
                 payload=payload,
                 flags="PA",
-                seq=send_seq+seq_offset,
-                # ack=synack_pkt[IP][TCP].seq + 1,
+                seq=send_seq + seq_offset,
+                ack=synack_pkt[IP][TCP].seq + 1,
                 sport=send_port,
             )
             # else:
             #     pkt = self.send_pkt(
             #         payload=payload,
-            #         flags="P",
+            #         flags="PA",
             #         seq=send_seq+seq_offset,
             #         sport=send_port,
             #     )
