@@ -203,29 +203,30 @@ class PacketUtils:
             msg = msg[chunk_size:]
             rand_msg = ''.join([random.choice(letters) for _ in range(chunk_size)])
 
-            pkt = self.send_pkt(
+            if len(msg) == 0:
+                pkt = self.send_pkt(
                 payload=payload,
-                flags="P",
+                flags="F",
                 seq=send_seq+seq_offset,
                 sport=send_port,
-            )
+                )
+            else:
+                pkt = self.send_pkt(
+                    payload=payload,
+                    flags="P",
+                    seq=send_seq+seq_offset,
+                    sport=send_port,
+                )
 
-            pkt = self.send_pkt(
-                payload=rand_msg,
-                ttl=ttl,
-                flags="P",
-                seq=send_seq+seq_offset,
-                sport=send_port,
-            )
+                # pkt = self.send_pkt(
+                #     payload=rand_msg,
+                #     ttl=ttl,
+                #     flags="P",
+                #     seq=send_seq+seq_offset,
+                #     sport=send_port,
+                # )
 
             seq_offset += len(payload)
-
-        pkt = self.send_pkt(
-            payload=payload,
-            flags="F",
-            seq=send_seq+seq_offset,
-            sport=send_port,
-        )
 
         return None
 
