@@ -285,8 +285,7 @@ class PacketUtils:
                 if isRST(next_pkt):
                     reset_returned = True
                     print('RST PACKET RECEIVED')
-                else:
-                    reply_pkt = next_pkt
+
                 next_pkt = self.get_pkt()
 
             ips.append(icmp_ip)
