@@ -176,8 +176,6 @@ class PacketUtils:
     # ttl is a ttl which triggers the Great Firewall but is before the
     # server itself (from a previous traceroute incantation
     def evade(self, target, msg, ttl):
-        self.send_pkt(flags="R")
-
         send_port = random.randrange(2000, 30000)
         send_seq = random.randint(1, 31313131)
         syn_pkt = self.send_pkt(
@@ -213,24 +211,17 @@ class PacketUtils:
                 payload=payload,
                 flags="PA",
                 seq=send_seq + seq_offset,
-                ack=synack_pkt[IP][TCP].seq + 1,
+                # ack=synack_pkt[IP][TCP].seq + 1,
                 sport=send_port,
             )
-            # else:
-            #     pkt = self.send_pkt(
-            #         payload=payload,
-            #         flags="PA",
-            #         seq=send_seq+seq_offset,
-            #         sport=send_port,
-            #     )
 
-                # pkt = self.send_pkt(
-                #     payload=rand_msg,
-                #     ttl=ttl,
-                #     flags="P",
-                #     seq=send_seq+seq_offset,
-                #     sport=send_port,
-                # )
+            # pkt = self.send_pkt(
+            #     payload=rand_msg,
+            #     flags="PA",
+            #     seq=send_seq + seq_offset,
+            #     ack=synack_pkt[IP][TCP].seq + 1,
+            #     sport=send_port,
+            # )
 
             seq_offset += len(payload)
 
