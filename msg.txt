@@ -1,4 +1,1 @@
-GET / HTTP/1.1
-connection: close
-host: www.miit.gov.cn
-
+GET / HTTP/1.1\nconnection: close\nhost: www.miit.gov.cn\n\n
