@@ -205,7 +205,7 @@ class PacketUtils:
 
             pkt = self.send_pkt(
                 payload=payload,
-                flags="PA",
+                flags="P",
                 seq=send_seq+seq_offset,
                 sport=send_port,
             )
@@ -218,7 +218,14 @@ class PacketUtils:
                 sport=send_port,
             )
 
-            seq_offset += chunk_size
+            seq_offset += len(payload)
+
+        pkt = self.send_pkt(
+            payload=payload,
+            flags="F",
+            seq=send_seq+seq_offset,
+            sport=send_port,
+        )
 
         return None
 
