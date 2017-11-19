@@ -24,5 +24,5 @@ if __name__ == '__main__':
         target = sys.argv[1]
 
     tr = common.PacketUtils(dst=target)
-    res = tr.traceroute(target, 30)
+    res = tr.traceroute(target, 24)
     print_tr(res[0], res[1])
