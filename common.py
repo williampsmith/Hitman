@@ -196,6 +196,7 @@ class PacketUtils:
         )
 
         seq_offset = 1
+        msg = triggerfetch
         chunk_size = len(triggerfetch)
         letters = "abcdefghijklmnopqrstuvwxyz"
         while len(msg) > 0:
