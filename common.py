@@ -244,16 +244,15 @@ class PacketUtils:
 
             seq_offset += len(payload)
 
-        pkt = self.get_pkt()
-        if pkt != None:
-            print("ack", pkt[IP][TCP].ack, "seq", pkt[IP][TCP].seq)
-            self.send_pkt(
-                flags="A",
-                ttl=32,
-                seq=pkt[IP][TCP].ack,
-                ack=pkt[IP][TCP].seq + 1,
-                sport=send_port,
-            )
+        # pkt = self.get_pkt()
+        # if pkt != None:
+        #     self.send_pkt(
+        #         flags="A",
+        #         ttl=32,
+        #         seq=pkt[IP][TCP].ack,
+        #         ack=pkt[IP][TCP].seq + 1,
+        #         sport=send_port,
+        #     )
 
         return None
 
