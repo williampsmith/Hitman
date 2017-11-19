@@ -276,8 +276,8 @@ class PacketUtils:
             next_pkt = self.get_pkt()
 
             while next_pkt != None:
-                if not isTimeExceeded(next_pkt):
-                    alive = True
+                # if not isTimeExceeded(next_pkt):
+                #     alive = True
                 if isICMP(next_pkt):
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
