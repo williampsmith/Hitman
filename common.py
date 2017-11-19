@@ -199,7 +199,7 @@ class PacketUtils:
         # )
         # print(synack_pkt)
         seq_offset = 1
-        chunk_size = 10
+        chunk_size = 2
         letters = "abcdefghijklmnopqrstuvwxyz"
         while len(msg) > 0:
             payload = msg[:chunk_size]
