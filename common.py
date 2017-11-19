@@ -173,7 +173,54 @@ class PacketUtils:
     # ttl is a ttl which triggers the Great Firewall but is before the
     # server itself (from a previous traceroute incantation
     def evade(self, target, msg, ttl):
-        return "NEED TO IMPLEMENT"
+        send_port = random.randrange(2000, 30000)
+        send_seq = random.randint(1, 31313131)
+        syn_pkt = self.send_pkt(
+            flags="S",
+            seq=send_seq,
+            sport=send_port,
+        )
+        synack_pkt = self.get_pkt()
+        while synack_pkt != None and not (
+            isSYNACK(synack_pkt) and
+            synack_pkt[IP][TCP].ack == send_seq + 1
+        ):
+            synack_pkt = self.get_pkt()
+
+        pkt = self.send_pkt(
+            flags="A",
+            ttl=32,
+            seq=synack_pkt[IP][TCP].ack,
+            ack=synack_pkt[IP][TCP].seq + 1,
+            sport=send_port,
+        )
+
+        seq_offset = 1
+        chunk_size = 3
+        letters = "abcdefghijklmnopqrstuvwxyz"
+        while len(msg) > 0:
+            send_msg = msg[:chunk_size]
+            msg = msg[chunk_size:]
+            rand_msg = ''.join([random.choice(letters) for _ in range(chunk_size)])
+
+            pkt = self.send_pkt(
+                payload=send_msg,
+                flags="P",
+                seq=send_seq+seq_offset,
+                sport=send_port,
+            )
+
+            pkt = self.send_pkt(
+                payload=rand_msg,
+                ttl=ttl,
+                flags="P",
+                seq=send_seq+seq_offset,
+                sport=send_port,
+            )
+
+            seq_offset += chunk_size
+
+        return None
 
     # Returns "DEAD" if server isn't alive,
     # "LIVE" if teh server is alive,
