@@ -247,7 +247,7 @@ class PacketUtils:
             synack_pkt = self.get_pkt()
 
         if synack_pkt == None or isTimeExceeded(synack_pkt):
-            return (None, [])
+            return ([], [])
 
         # final handshake ack
         pkt = self.send_pkt(
