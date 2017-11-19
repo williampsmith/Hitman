@@ -357,7 +357,7 @@ class PacketUtils:
         for i in range(hops + 1):
             # empty packet queue between hops
             while not self.packetQueue.empty():
-                self.packetQueue.get()
+                self.get_pkt()
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
