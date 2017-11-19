@@ -352,19 +352,25 @@ class PacketUtils:
 
         # traceroute packets
         reply_pkt = synack_pkt
+        first = True  # first packet should not have an ack
+        seq_offset = reply_pkt[IP][TCP].ack
+        ack_offset = reply_pkt[IP][TCP].seq + 1
         for i in range(hops + 1):
             # empty packet queue between hops
             while not self.packetQueue.empty():
                 self.packetQueue.get()
             for j in range(3):
+                flags = "P" if first else "PA"
                 pkt = self.send_pkt(
                     payload=triggerfetch,
-                    flags="P",
+                    flags=flags,
                     ttl=i,
-                    seq=reply_pkt[IP][TCP].ack,
-                    ack=reply_pkt[IP][TCP].seq + 1,
+                    seq=seq_offset,
+                    ack=ack_offset,
                     sport=send_port,
                 )
+                first = False
+                seq_offset += len(triggerfetch)
 
             alive, reset_returned = False, False
             icmp_ip = None
@@ -375,6 +381,7 @@ class PacketUtils:
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
                 else:
+                    ack_offset += 1
                     reply_pkt = next_pkt
 
                 if isRST(next_pkt):
@@ -385,5 +392,9 @@ class PacketUtils:
 
             ips.append(icmp_ip)
             resets.append(reset_returned)
+            # early exit once we get a RST (firewall)
+            # TODO: check this
+            if reset_returned:
+                break
 
         return (ips, resets)
