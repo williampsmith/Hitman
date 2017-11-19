@@ -298,10 +298,6 @@ class PacketUtils:
 
         ips = []
         resets = []
-
-
-        # traceroute packets
-        reply_pkt = synack_pkt
         for i in range(hops + 1):
             # handshake
             send_port = random.randrange(2000, 30000)
@@ -331,6 +327,8 @@ class PacketUtils:
                 sport=send_port,
             )
 
+            # traceroute packets
+            reply_pkt = synack_pkt
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
