@@ -196,7 +196,7 @@ class PacketUtils:
         )
 
         seq_offset = 1
-        chunk_size = len(msg)
+        chunk_size = len(triggerfetch)
         letters = "abcdefghijklmnopqrstuvwxyz"
         while len(msg) > 0:
             payload = msg[:chunk_size]
