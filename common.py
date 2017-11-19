@@ -232,7 +232,7 @@ class PacketUtils:
                     seq=send_seq + seq_offset,
                     ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
-                )  
+                )
 
                 pkt = self.send_pkt(
                     payload=payload,
@@ -353,6 +353,9 @@ class PacketUtils:
         # traceroute packets
         reply_pkt = synack_pkt
         for i in range(hops + 1):
+            # empty packet queue between hops
+            while not self.packetQueue.isEmpty():
+                self.packetQueue.get()
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
