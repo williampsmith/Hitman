@@ -276,21 +276,19 @@ class PacketUtils:
             next_pkt = self.get_pkt()
 
             while next_pkt != None:
-                # if not isTimeExceeded(next_pkt):
-                #     alive = True
                 if isICMP(next_pkt):
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
-                elif isRST(next_pkt):
-                    reset_returned = True
-                    reply_pkt = next_pkt
-                    print('RST PACKET RECEIVED')
                 else:
                     reply_pkt = next_pkt
 
+                if isRST(next_pkt):
+                    reset_returned = True
+                    print('RST PACKET RECEIVED')
+                else:
+                    reply_pkt = next_pkt
                 next_pkt = self.get_pkt()
 
-            # if alive:
             ips.append(icmp_ip)
             resets.append(reset_returned)
 
