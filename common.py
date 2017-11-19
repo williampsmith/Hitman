@@ -210,7 +210,7 @@ class PacketUtils:
             # if len(msg) == 0:
             pkt = self.send_pkt(
                 payload=payload,
-                flags="PA",
+                flags="P",
                 seq=send_seq+seq_offset,
                 ack=synack_pkt[IP][TCP].seq + 1,
                 sport=send_port,
