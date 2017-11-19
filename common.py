@@ -354,7 +354,7 @@ class PacketUtils:
         reply_pkt = synack_pkt
         for i in range(hops + 1):
             # empty packet queue between hops
-            while not self.packetQueue.isEmpty():
+            while not self.packetQueue.empty():
                 self.packetQueue.get()
             for j in range(3):
                 pkt = self.send_pkt(
