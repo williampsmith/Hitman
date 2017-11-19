@@ -254,7 +254,16 @@ class PacketUtils:
         #         sport=send_port,
         #     )
 
-        return None
+        # Get data in first 5 seconds
+        result = ''
+        stop_time = time.time() + 5.0
+
+        while (time.time() < stop_time):
+            pkt = self.get_pkt(stop_time - time.time())
+            if pkt != None:
+                result += pkt['Raw'].load
+
+        return result
 
     # Returns "DEAD" if server isn't alive,
     # "LIVE" if teh server is alive,
