@@ -261,7 +261,7 @@ class PacketUtils:
         while (time.time() < stop_time):
             pkt = self.get_pkt(stop_time - time.time())
             if pkt != None:
-                if 'Row' in pkt:
+                if 'Raw' in pkt:
                     result += pkt['Raw'].load
 
         return result
