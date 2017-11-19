@@ -208,17 +208,20 @@ class PacketUtils:
             rand_msg = ''.join([random.choice(letters) for _ in range(chunk_size)])
 
             # if len(msg) == 0:
+            # if random.randint(0, 1)
+
             pkt = self.send_pkt(
-                payload=rand_msg,
-                ttl=ttl,
+                payload=payload,
                 flags="PA",
                 seq=send_seq + seq_offset,
                 ack=synack_pkt[IP][TCP].seq + 1,
                 sport=send_port,
             )
 
+
             pkt = self.send_pkt(
-                payload=payload,
+                payload=rand_msg,
+                ttl=ttl,
                 flags="PA",
                 seq=send_seq + seq_offset,
                 ack=synack_pkt[IP][TCP].seq + 1,
