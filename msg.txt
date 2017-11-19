@@ -1,1 +1,2 @@
-Put msg in here
+GET /search?q=Falun%20Gong HTTP/1.1
+host: www.google.com
