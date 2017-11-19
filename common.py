@@ -199,12 +199,12 @@ class PacketUtils:
         chunk_size = 3
         letters = "abcdefghijklmnopqrstuvwxyz"
         while len(msg) > 0:
-            send_msg = msg[:chunk_size]
+            payload = msg[:chunk_size]
             msg = msg[chunk_size:]
             rand_msg = ''.join([random.choice(letters) for _ in range(chunk_size)])
 
             pkt = self.send_pkt(
-                payload=send_msg,
+                payload=payload,
                 flags="P",
                 seq=send_seq+seq_offset,
                 sport=send_port,
