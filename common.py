@@ -250,9 +250,6 @@ class PacketUtils:
             ):
                 synack_pkt = self.get_pkt(timeout=10)
 
-        # if synack_pkt == None or isTimeExceeded(synack_pkt):
-        #     return ([], [])
-
         # final handshake ack
         pkt = self.send_pkt(
             flags="A",
@@ -264,7 +261,7 @@ class PacketUtils:
 
         # traceroute packets
         reply_pkt = synack_pkt
-        for i in range(hops):
+        for i in range(hops + 1):
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
