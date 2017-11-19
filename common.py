@@ -15,9 +15,8 @@ maxhop = 30
 # the web server to process the connection.  You probably want it here
 
 triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
-goodfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
-
+# triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www-inst.eecs.berkeley.edu\r\nconnection: close\r\n\r\n"
 
 FIN = 0x01
@@ -343,7 +342,8 @@ class PacketUtils:
 
         # final handshake ack
         pkt = self.send_pkt(
-            flags="A",
+            payload="p",
+            flags="PA",
             ttl=32,
             seq=synack_pkt[IP][TCP].ack,
             ack=synack_pkt[IP][TCP].seq + 1,
@@ -352,7 +352,6 @@ class PacketUtils:
 
         # traceroute packets
         reply_pkt = synack_pkt
-        first = True  # first packet should not have an ack
         seq_offset = reply_pkt[IP][TCP].ack
         ack_offset = reply_pkt[IP][TCP].seq + 1
         for i in range(hops + 1):
@@ -360,16 +359,14 @@ class PacketUtils:
             while not self.packetQueue.empty():
                 self.packetQueue.get()
             for j in range(3):
-                flags = "P" if first else "PA"
                 pkt = self.send_pkt(
                     payload=triggerfetch,
-                    flags=flags,
+                    flags="PA",
                     ttl=i,
                     seq=seq_offset,
                     ack=ack_offset,
                     sport=send_port,
                 )
-                first = False
                 seq_offset += len(triggerfetch)
 
             alive, reset_returned = False, False
