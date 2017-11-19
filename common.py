@@ -197,7 +197,7 @@ class PacketUtils:
         #     ack=synack_pkt[IP][TCP].seq + 1,
         #     sport=send_port,
         # )
-        print(synack_pkt)
+        # print(synack_pkt)
         seq_offset = 1
         chunk_size = 10
         letters = "abcdefghijklmnopqrstuvwxyz"
