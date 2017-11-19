@@ -280,9 +280,11 @@ class PacketUtils:
                     alive = True
                 if isICMP(next_pkt):
                     icmp_ip = next_pkt[IP].src
+                    print('ICMP PACKET RECEIVED')
                 elif isRST(next_pkt):
                     reset_returned = True
                     reply_pkt = next_pkt
+                    print('ICMP PACKET RECEIVED')
                 else:
                     reply_pkt = next_pkt
 
