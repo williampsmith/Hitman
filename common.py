@@ -229,39 +229,108 @@ class PacketUtils:
     # The second list is T/F
     # if there is a RST back for that particular request
     def traceroute(self, target, hops):
+        # ips = []
+        # resets = []
+        # # handshake
+        # send_port = random.randrange(2000, 30000)
+        # send_seq = random.randint(1, 31313131)
+        #
+        # synack_pkt = None
+        #
+        # while synack_pkt == None:
+        #     syn_pkt = self.send_pkt(
+        #         flags="S",
+        #         seq=send_seq,
+        #         sport=send_port,
+        #     )
+        #     synack_pkt = self.get_pkt(timeout=10)
+        #     while synack_pkt != None and not (
+        #         isSYNACK(synack_pkt) and
+        #         synack_pkt[IP][TCP].ack == send_seq + 1
+        #     ):
+        #         synack_pkt = self.get_pkt(timeout=10)
+        #
+        # # final handshake ack
+        # pkt = self.send_pkt(
+        #     flags="A",
+        #     ttl=32,
+        #     seq=synack_pkt[IP][TCP].ack,
+        #     ack=synack_pkt[IP][TCP].seq + 1,
+        #     sport=send_port,
+        # )
+        #
+        # # traceroute packets
+        # reply_pkt = synack_pkt
+        # for i in range(hops + 1):
+        #     for j in range(3):
+        #         pkt = self.send_pkt(
+        #             payload=triggerfetch,
+        #             flags="P",
+        #             ttl=i,
+        #             seq=reply_pkt[IP][TCP].ack,
+        #             ack=reply_pkt[IP][TCP].seq + 1,
+        #             sport=send_port,
+        #         )
+        #
+        #     alive, reset_returned = False, False
+        #     icmp_ip = None
+        #     next_pkt = self.get_pkt(timeout=10)
+        #
+        #     while next_pkt != None:
+        #         if isICMP(next_pkt):
+        #             icmp_ip = next_pkt[IP].src
+        #             print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
+        #         else:
+        #             reply_pkt = next_pkt
+        #
+        #         if isRST(next_pkt):
+        #             reset_returned = True
+        #             print('RST PACKET RECEIVED')
+        #
+        #         next_pkt = self.get_pkt(timeout=10)
+        #
+        #     ips.append(icmp_ip)
+        #     resets.append(reset_returned)
+        #
+        # return (ips, resets)
+
+        ####################### TODO: REMOVE BELOW #############################
+
         ips = []
         resets = []
-        # handshake
-        send_port = random.randrange(2000, 30000)
-        send_seq = random.randint(1, 31313131)
 
-        synack_pkt = None
-
-        while synack_pkt == None:
-            syn_pkt = self.send_pkt(
-                flags="S",
-                seq=send_seq,
-                sport=send_port,
-            )
-            synack_pkt = self.get_pkt(timeout=10)
-            while synack_pkt != None and not (
-                isSYNACK(synack_pkt) and
-                synack_pkt[IP][TCP].ack == send_seq + 1
-            ):
-                synack_pkt = self.get_pkt(timeout=10)
-
-        # final handshake ack
-        pkt = self.send_pkt(
-            flags="A",
-            ttl=32,
-            seq=synack_pkt[IP][TCP].ack,
-            ack=synack_pkt[IP][TCP].seq + 1,
-            sport=send_port,
-        )
 
         # traceroute packets
         reply_pkt = synack_pkt
         for i in range(hops + 1):
+            # handshake
+            send_port = random.randrange(2000, 30000)
+            send_seq = random.randint(1, 31313131)
+
+            synack_pkt = None
+
+            while synack_pkt == None:
+                syn_pkt = self.send_pkt(
+                    flags="S",
+                    seq=send_seq,
+                    sport=send_port,
+                )
+                synack_pkt = self.get_pkt(timeout=10)
+                while synack_pkt != None and not (
+                    isSYNACK(synack_pkt) and
+                    synack_pkt[IP][TCP].ack == send_seq + 1
+                ):
+                    synack_pkt = self.get_pkt(timeout=10)
+
+            # final handshake ack
+            pkt = self.send_pkt(
+                flags="A",
+                ttl=32,
+                seq=synack_pkt[IP][TCP].ack,
+                ack=synack_pkt[IP][TCP].seq + 1,
+                sport=send_port,
+            )
+
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
