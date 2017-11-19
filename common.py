@@ -210,7 +210,7 @@ class PacketUtils:
             pkt = self.send_pkt(
                 payload=payload,
                 flags="PA",
-                seq=send_seq,
+                seq=send_seq + seq_offset,
                 ack=synack_pkt[IP][TCP].seq + 1,
                 sport=send_port,
             )
@@ -218,7 +218,7 @@ class PacketUtils:
             pkt = self.send_pkt(
                 payload=rand_msg,
                 flags="PA",
-                seq=send_seq,
+                seq=send_seq + seq_offset,
                 ack=synack_pkt[IP][TCP].seq + 1,
                 sport=send_port,
             )
