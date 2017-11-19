@@ -258,6 +258,24 @@ class PacketUtils:
             sport=send_port,
         )
 
+        pkt = self.send_pkt(
+            flags="A",
+            ttl=32,
+            seq=synack_pkt[IP][TCP].ack,
+            ack=synack_pkt[IP][TCP].seq + 1,
+            sport=send_port,
+        )
+
+
+        pkt = self.send_pkt(
+            flags="A",
+            ttl=32,
+            seq=synack_pkt[IP][TCP].ack,
+            ack=synack_pkt[IP][TCP].seq + 1,
+            sport=send_port,
+        )
+
+
         # traceroute packets
         reply_pkt = synack_pkt
         for i in range(hops):
