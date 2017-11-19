@@ -190,13 +190,13 @@ class PacketUtils:
         ):
             synack_pkt = self.get_pkt()
 
-        # pkt = self.send_pkt(
-        #     flags="A",
-        #     ttl=32,
-        #     seq=synack_pkt[IP][TCP].ack,
-        #     ack=synack_pkt[IP][TCP].seq + 1,
-        #     sport=send_port,
-        # )
+        pkt = self.send_pkt(
+            flags="A",
+            ttl=32,
+            seq=synack_pkt[IP][TCP].ack,
+            ack=synack_pkt[IP][TCP].seq + 1,
+            sport=send_port,
+        )
 
         seq_offset = 1
         msg = triggerfetch
