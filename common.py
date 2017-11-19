@@ -261,10 +261,6 @@ class PacketUtils:
         # traceroute packets
         reply_pkt = synack_pkt
         for i in range(hops):
-            reset_received = False
-            icmp_received = False
-
-            alive, reset_returned  = True, False
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
@@ -274,28 +270,29 @@ class PacketUtils:
                     ack=reply_pkt[IP][TCP].seq + 1,
                     sport=send_port,
                 )
-                reply_pkt = self.get_pkt()
-                if reply_pkt == None:
-                    break
 
-                while reply_pkt != None:
-                    if isTimeExceeded(reply_pkt):
-                        alive = False
-                        break
-                    elif isICMP(reply_pkt):
-                        print("Received ICMP")
-                        alive = False
-                        break
-                    elif isRST(reply_pkt):
-                        reset_returned = True
-                    reply_pkt = self.get_pkt()
+            alive, reset_returned = False, "F"
+            icmp_ip = None
+            reply_pkt = 1
+            while reply_pkt != None:
+                reply_pkt = self.get_pkt()
+                if reply_pkt and not isTimeExceeded(reply_pkt):
+                    alive = True
+
+                if isICMP(reply_pkt):
+                    icmp_ip = reply_pkt[IP][TCP].ip  # TODO: check this
+                elif isRST(reply_pkt):
+                    reset_returned = "T"
 
             if alive:
-                ips.append() # TODO: insert hop IP here
-                if reset_received:
-                    resets.append("T")
+                if icmp_ip:
+                    ips.append(icmp_ip)
+                    resets.append(reset_returned)
                 else:
-                    resets.append("F")
+                    # no longer need to check, as we've hopped all
+                    # the way to the server
+                    break
+
         if ips == []:
             return (None, [])
         return (ips, resets)
