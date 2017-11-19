@@ -243,12 +243,12 @@ class PacketUtils:
                 seq=send_seq,
                 sport=send_port,
             )
-            synack_pkt = self.get_pkt()
+            synack_pkt = self.get_pkt(timeout=10)
             while synack_pkt != None and not (
                 isSYNACK(synack_pkt) and
                 synack_pkt[IP][TCP].ack == send_seq + 1
             ):
-                synack_pkt = self.get_pkt()
+                synack_pkt = self.get_pkt(timeout=10)
 
         # if synack_pkt == None or isTimeExceeded(synack_pkt):
         #     return ([], [])
@@ -277,7 +277,7 @@ class PacketUtils:
 
             alive, reset_returned = False, False
             icmp_ip = None
-            next_pkt = self.get_pkt()
+            next_pkt = self.get_pkt(timeout=10)
 
             while next_pkt != None:
                 if isICMP(next_pkt):
@@ -290,7 +290,7 @@ class PacketUtils:
                     reset_returned = True
                     print('RST PACKET RECEIVED')
 
-                next_pkt = self.get_pkt()
+                next_pkt = self.get_pkt(timeout=10)
 
             ips.append(icmp_ip)
             resets.append(reset_returned)
