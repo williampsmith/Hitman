@@ -234,20 +234,24 @@ class PacketUtils:
         # handshake
         send_port = random.randrange(2000, 30000)
         send_seq = random.randint(1, 31313131)
-        syn_pkt = self.send_pkt(
-            flags="S",
-            seq=send_seq,
-            sport=send_port,
-        )
-        synack_pkt = self.get_pkt()
-        while synack_pkt != None and not (
-            isSYNACK(synack_pkt) and
-            synack_pkt[IP][TCP].ack == send_seq + 1
-        ):
-            synack_pkt = self.get_pkt()
 
-        if synack_pkt == None or isTimeExceeded(synack_pkt):
-            return ([], [])
+        synack_pkt = None
+
+        while synack_pkt == None:
+            syn_pkt = self.send_pkt(
+                flags="S",
+                seq=send_seq,
+                sport=send_port,
+            )
+            synack_pkt = self.get_pkt()
+            while synack_pkt != None and not (
+                isSYNACK(synack_pkt) and
+                synack_pkt[IP][TCP].ack == send_seq + 1
+            ):
+                synack_pkt = self.get_pkt()
+
+        # if synack_pkt == None or isTimeExceeded(synack_pkt):
+        #     return ([], [])
 
         # final handshake ack
         pkt = self.send_pkt(
@@ -257,24 +261,6 @@ class PacketUtils:
             ack=synack_pkt[IP][TCP].seq + 1,
             sport=send_port,
         )
-
-        pkt = self.send_pkt(
-            flags="A",
-            ttl=32,
-            seq=synack_pkt[IP][TCP].ack,
-            ack=synack_pkt[IP][TCP].seq + 1,
-            sport=send_port,
-        )
-
-
-        pkt = self.send_pkt(
-            flags="A",
-            ttl=32,
-            seq=synack_pkt[IP][TCP].ack,
-            ack=synack_pkt[IP][TCP].seq + 1,
-            sport=send_port,
-        )
-
 
         # traceroute packets
         reply_pkt = synack_pkt
