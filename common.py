@@ -205,10 +205,10 @@ class PacketUtils:
 
             if len(msg) == 0:
                 pkt = self.send_pkt(
-                payload=payload,
-                flags="F",
-                seq=send_seq+seq_offset,
-                sport=send_port,
+                    payload=payload,
+                    flags="F",
+                    seq=send_seq+seq_offset,
+                    sport=send_port,
                 )
             else:
                 pkt = self.send_pkt(
