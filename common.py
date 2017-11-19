@@ -289,8 +289,8 @@ class PacketUtils:
                     ips.append(icmp_ip)
                     resets.append(reset_returned)
                 else:
-                    # no longer need to check, as we've hopped all
-                    # the way to the server
+                    # no longer need to check, as we've hopped
+                    # all the way to the server
                     break
 
         if ips == []:
