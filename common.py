@@ -284,7 +284,7 @@ class PacketUtils:
                 elif isRST(next_pkt):
                     reset_returned = True
                     reply_pkt = next_pkt
-                    print('ICMP PACKET RECEIVED')
+                    print('RST PACKET RECEIVED')
                 else:
                     reply_pkt = next_pkt
 
