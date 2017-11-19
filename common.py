@@ -290,8 +290,8 @@ class PacketUtils:
 
                 next_pkt = self.get_pkt()
 
-            if alive:
-                ips.append(icmp_ip)
-                resets.append(reset_returned)
+            # if alive:
+            ips.append(icmp_ip)
+            resets.append(reset_returned)
 
         return (ips, resets)
