@@ -196,7 +196,7 @@ class PacketUtils:
         )
 
         seq_offset = 1
-        chunk_size = 3
+        chunk_size = 10
         letters = "abcdefghijklmnopqrstuvwxyz"
         while len(msg) > 0:
             payload = msg[:chunk_size]
@@ -210,13 +210,13 @@ class PacketUtils:
                 sport=send_port,
             )
 
-            pkt = self.send_pkt(
-                payload=rand_msg,
-                ttl=ttl,
-                flags="P",
-                seq=send_seq+seq_offset,
-                sport=send_port,
-            )
+            # pkt = self.send_pkt(
+            #     payload=rand_msg,
+            #     ttl=ttl,
+            #     flags="P",
+            #     seq=send_seq+seq_offset,
+            #     sport=send_port,
+            # )
 
             seq_offset += chunk_size
 
