@@ -16,7 +16,9 @@ maxhop = 30
 
 # triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
-triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
+# triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
+
+triggerfetch = "GET / HTTP/1.1\r\nhost: www-inst.eecs.berkeley.edu\r\nconnection: close\r\n\r\n"
 
 FIN = 0x01
 SYN = 0x02
