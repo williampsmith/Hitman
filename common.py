@@ -324,10 +324,7 @@ class PacketUtils:
     # or none if none
     # The second list is T/F
     # if there is a RST back for that particular request
-    def traceroute(self, target, hops):
-        ips = []
-        resets = []
-
+    def handshake(self):
         # handshake
         send_port = random.randrange(2000, 30000)
         send_seq = random.randint(1, 31313131)
@@ -344,6 +341,14 @@ class PacketUtils:
                 synack_pkt[IP][TCP].ack == send_seq + 1
             ):
                 synack_pkt = self.get_pkt()
+
+        return send_port, synack_pkt
+
+    def traceroute(self, target, hops):
+        ips = []
+        resets = []
+
+        send_port, synack_pkt = self.handshake()
 
         # traceroute packets
         for i in range(hops + 1):
