@@ -278,14 +278,21 @@ class PacketUtils:
         if reply_pkt == None:
             return "DEAD"
 
+        rst_returned = False
+        live_handshake = False
         while reply_pkt != None:
             if isRST(reply_pkt):
-                return "FIREWALL"
+                rst_returned = True
             elif not isICMP(reply_pkt):
-                return "LIVE"
+                live_handshake = True
             reply_pkt = self.get_pkt()
 
-        return "DEAD"
+        if rst_returned:
+            return "FIREWALL"
+        elif live_handshake:
+            return "LIVE"
+        else:
+            return "DEAD"
 
     # Format is
     # ([], [])
