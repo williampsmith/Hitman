@@ -14,7 +14,8 @@ maxhop = 25
 # A request that will trigger the great firewall but will NOT cause
 # the web server to process the connection.  You probably want it here
 
-triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
+# triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
+triggerfetch = "GET / HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www-inst.eecs.berkeley.edu\r\nconnection: close\r\n\r\n"
@@ -337,7 +338,7 @@ class PacketUtils:
                 seq=send_seq,
                 sport=send_port,
             )
-            synack_pkt = self.get_pkt(timeout=10)
+            synack_pkt = self.get_pkt(timeout=5)
             while synack_pkt != None and not (
                 isSYNACK(synack_pkt) and
                 synack_pkt[IP][TCP].ack == send_seq + 1
@@ -348,14 +349,14 @@ class PacketUtils:
         for i in range(hops + 1):
             # empty packet queue between hops
             # while not self.packetQueue.empty():
-            self.get_pkt(timeout=10)
-            print("seq sent", synack_pkt[IP][TCP].ack)
-            print("ack sent", synack_pkt[IP][TCP].seq + 1)
+            self.get_pkt(timeout=5)
+            # print("seq sent", synack_pkt[IP][TCP].ack)
+            # print("ack sent", synack_pkt[IP][TCP].seq + 1)
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
                     flags="PA",
-                    ttl=i,
+                    # ttl=i,
                     seq=synack_pkt[IP][TCP].ack,
                     ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
@@ -364,7 +365,7 @@ class PacketUtils:
             # process packet queue
             reset_returned = False
             icmp_ip = None
-            next_pkt = self.get_pkt(timeout=10)
+            next_pkt = self.get_pkt(timeout=5)
             while next_pkt != None:
                 if isTimeExceeded(next_pkt):
                     icmp_ip = next_pkt[IP].src
@@ -376,7 +377,7 @@ class PacketUtils:
                     reset_returned = True
                     print('RST PACKET RECEIVED')
 
-                next_pkt = self.get_pkt(timeout=10)
+                next_pkt = self.get_pkt(timeout=5)
 
             ips.append(icmp_ip)
             resets.append(reset_returned)
