@@ -360,7 +360,7 @@ class PacketUtils:
                 pkt = self.send_pkt(
                     payload=triggerfetch,
                     flags="PA",
-                    ttl=23,
+                    ttl=21,
                     seq=synack_pkt[IP][TCP].ack,
                     ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
