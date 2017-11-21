@@ -191,38 +191,52 @@ class PacketUtils:
         seq_offset = 1
         chunk_size = 2
         letters = "abcdefghijklmnopqrstuvwxyz"
+        print(msg)
+        print(len(msg))
         while len(msg) > 0:
             payload = msg[:chunk_size]
             msg = msg[chunk_size:]
             rand_msg = ''.join([random.choice(letters) for _ in range(chunk_size)])
 
-            if random.randint(0, 1) == 0:
-                pkt = self.send_pkt(
-                    payload=payload,
-                    flags="PA",
-                    seq=send_seq + seq_offset,
-                    ack=synack_pkt[IP][TCP].seq + 1,
-                    sport=send_port,
-                )
+            if len(msg) + len(payload) > 5:
+                if random.randint(0, 1) == 0:
+                    pkt = self.send_pkt(
+                        payload=payload,
+                        flags="PA",
+                        seq=send_seq + seq_offset,
+                        ack=synack_pkt[IP][TCP].seq + 1,
+                        sport=send_port,
+                    )
 
-                pkt = self.send_pkt(
-                    payload=rand_msg,
-                    ttl=ttl+1,
-                    flags="PA",
-                    seq=send_seq + seq_offset,
-                    ack=synack_pkt[IP][TCP].seq + 1,
-                    sport=send_port,
-                )
+                    pkt = self.send_pkt(
+                        payload=rand_msg,
+                        ttl=ttl+1,
+                        flags="PA",
+                        seq=send_seq + seq_offset,
+                        ack=synack_pkt[IP][TCP].seq + 1,
+                        sport=send_port,
+                    )
+                else:
+                    pkt = self.send_pkt(
+                        payload=rand_msg,
+                        ttl=ttl+1,
+                        flags="PA",
+                        seq=send_seq + seq_offset,
+                        ack=synack_pkt[IP][TCP].seq + 1,
+                        sport=send_port,
+                    )
+
+                    pkt = self.send_pkt(
+                        payload=payload,
+                        flags="PA",
+                        seq=send_seq + seq_offset,
+                        ack=synack_pkt[IP][TCP].seq + 1,
+                        sport=send_port,
+                    )
             else:
-                pkt = self.send_pkt(
-                    payload=rand_msg,
-                    ttl=ttl+1,
-                    flags="PA",
-                    seq=send_seq + seq_offset,
-                    ack=synack_pkt[IP][TCP].seq + 1,
-                    sport=send_port,
-                )
-
+                # Make sure the terminating new line characters get delivered
+                print(msg)
+                print(payload)
                 pkt = self.send_pkt(
                     payload=payload,
                     flags="PA",
@@ -232,16 +246,6 @@ class PacketUtils:
                 )
 
             seq_offset += len(payload)
-
-        # pkt = self.get_pkt()
-        # if pkt != None:
-        #     self.send_pkt(
-        #         flags="A",
-        #         ttl=32,
-        #         seq=pkt[IP][TCP].ack,
-        #         ack=pkt[IP][TCP].seq + 1,
-        #         sport=send_port,
-        #     )
 
         # Get data in first 5 seconds
         result = ''
