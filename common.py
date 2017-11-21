@@ -372,9 +372,9 @@ class PacketUtils:
             reset_returned = False
             icmp_ip = None
             next_pkt = self.get_pkt(timeout=10)
-            print('Received packet with ack %s' % (next_pkt[IP][TCP].seq + 1))
 
             while next_pkt != None:
+                print('Received packet with ack %s' % (next_pkt[IP][TCP].seq + 1))
                 if isTimeExceeded(next_pkt):
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
@@ -387,7 +387,6 @@ class PacketUtils:
                     print('RST PACKET RECEIVED')
 
                 next_pkt = self.get_pkt(timeout=10)
-                print('Received packet with ack %s' % (next_pkt[IP][TCP].seq + 1))
 
             ips.append(icmp_ip)
             resets.append(reset_returned)
