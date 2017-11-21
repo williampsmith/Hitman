@@ -235,6 +235,7 @@ class PacketUtils:
                         sport=send_port,
                     )
             else:
+                print(msg)
                 print(payload)
                 pkt = self.send_pkt(
                     payload=payload,
