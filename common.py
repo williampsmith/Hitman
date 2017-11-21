@@ -279,15 +279,13 @@ class PacketUtils:
             return "DEAD"
 
         while reply_pkt != None:
-            if isTimeExceeded(reply_pkt):
-                return "DEAD"
             if isRST(reply_pkt):
                 return "FIREWALL"
-            elif isICMP(reply_pkt):
-                print("Received ICMP")
+            elif not isICMP(reply_pkt):
+                return "LIVE"
             reply_pkt = self.get_pkt()
 
-        return "LIVE"
+        return "DEAD"
 
     # Format is
     # ([], [])
@@ -374,4 +372,3 @@ class PacketUtils:
             return None, None, None
 
         return send_port, send_seq, synack_pkt
-
