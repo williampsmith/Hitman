@@ -349,6 +349,8 @@ class PacketUtils:
             # empty packet queue between hops
             # while not self.packetQueue.empty():
             self.get_pkt(timeout=10)
+            print(synack_pkt[IP][TCP].ack)
+            print(synack_pkt[IP][TCP].seq + 1)
             for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
