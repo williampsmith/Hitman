@@ -191,6 +191,7 @@ class PacketUtils:
         seq_offset = 1
         chunk_size = 2
         letters = "abcdefghijklmnopqrstuvwxyz"
+        print(len(msg))
         while len(msg) > 0:
             payload = msg[:chunk_size]
             msg = msg[chunk_size:]
