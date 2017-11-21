@@ -197,6 +197,7 @@ class PacketUtils:
             msg = msg[chunk_size:]
             rand_msg = ''.join([random.choice(letters) for _ in range(chunk_size)])
 
+            # Make sure the terminating new line characters get delivered
             if len(msg) > 5:
                 if random.randint(0, 1) == 0:
                     pkt = self.send_pkt(
@@ -233,6 +234,7 @@ class PacketUtils:
                         sport=send_port,
                     )
             else:
+                print(payload)
                 pkt = self.send_pkt(
                     payload=payload,
                     flags="PA",
