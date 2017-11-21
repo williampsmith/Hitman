@@ -338,7 +338,7 @@ class PacketUtils:
                 isSYNACK(synack_pkt) and
                 synack_pkt[IP][TCP].ack == send_seq + 1
             ):
-                synack_pkt = self.get_pkt(timeout=10)
+                synack_pkt = self.get_pkt()
 
         # final handshake ack
         pkt = self.send_pkt(
@@ -367,18 +367,19 @@ class PacketUtils:
                     ack=ack_offset,
                     sport=send_port,
                 )
-                seq_offset += len(triggerfetch)
+                # seq_offset += len(triggerfetch)
 
             reset_returned = False
             icmp_ip = None
             next_pkt = self.get_pkt(timeout=10)
+            print('Received packet with ack %s' % (next_pkt[IP][TCP].seq + 1))
 
             while next_pkt != None:
                 if isTimeExceeded(next_pkt):
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
                 else:
-                    ack_offset += 1
+                    # ack_offset += 1
                     reply_pkt = next_pkt
 
                 if isRST(next_pkt):
@@ -386,6 +387,7 @@ class PacketUtils:
                     print('RST PACKET RECEIVED')
 
                 next_pkt = self.get_pkt(timeout=10)
+                print('Received packet with ack %s' % (next_pkt[IP][TCP].seq + 1))
 
             ips.append(icmp_ip)
             resets.append(reset_returned)
