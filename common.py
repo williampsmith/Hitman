@@ -321,12 +321,11 @@ class PacketUtils:
     def traceroute(self, target, hops):
         ips = []
         resets = []
-        # handshake
         send_port = random.randrange(2000, 30000)
         send_seq = random.randint(1, 31313131)
 
+        # handshake
         synack_pkt = None
-
         while synack_pkt == None:
             syn_pkt = self.send_pkt(
                 flags="S",
@@ -340,15 +339,15 @@ class PacketUtils:
             ):
                 synack_pkt = self.get_pkt()
 
-        # final handshake ack
-        pkt = self.send_pkt(
-            payload="p",
-            flags="PA",
-            ttl=32,
-            seq=synack_pkt[IP][TCP].ack,
-            ack=synack_pkt[IP][TCP].seq + 1,
-            sport=send_port,
-        )
+        # # final handshake ack
+        # pkt = self.send_pkt(
+        #     payload="p",
+        #     flags="PA",
+        #     ttl=32,
+        #     seq=synack_pkt[IP][TCP].ack,
+        #     ack=synack_pkt[IP][TCP].seq + 1,
+        #     sport=send_port,
+        # )
 
         # traceroute packets
         reply_pkt = synack_pkt
@@ -367,7 +366,6 @@ class PacketUtils:
                     ack=ack_offset,
                     sport=send_port,
                 )
-                # seq_offset += len(triggerfetch)
 
             reset_returned = False
             icmp_ip = None
@@ -378,8 +376,7 @@ class PacketUtils:
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
                 else:
-                    print('NON-ICMP PACKET RECEIVED WITH ACK %s' % (next_pkt[IP][TCP].seq + 1))
-                    # ack_offset += 1
+                    print('NON-ICMP PACKET RECEIVED. ACK: %s' % (next_pkt[IP][TCP].seq + 1))
                     reply_pkt = next_pkt
 
                 if isRST(next_pkt):
