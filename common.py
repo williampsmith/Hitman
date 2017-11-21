@@ -348,13 +348,12 @@ class PacketUtils:
         ips = []
         resets = []
 
-        send_port, synack_pkt = self.handshake()
-
         # traceroute packets
         for i in range(hops + 1):
             # empty packet queue between hops
             # while not self.packetQueue.empty():
             self.get_pkt(timeout=5)
+            send_port, synack_pkt = self.handshake()
             # print("seq sent", synack_pkt[IP][TCP].ack)
             # print("ack sent", synack_pkt[IP][TCP].seq + 1)
             for j in range(3):
