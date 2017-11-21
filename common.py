@@ -307,7 +307,7 @@ class PacketUtils:
         for i in range(hops + 1):
             # empty packet queue between hops
             while not self.packetQueue.empty():
-                pkt = self.get_pkt(timeout=5)
+                _ = self.get_pkt()
 
             send_port, _, synack_pkt = self.handshake()
             if synack_pkt is None:
