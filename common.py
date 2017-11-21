@@ -351,7 +351,7 @@ class PacketUtils:
 
         return (ips, resets)
 
-    def handshake(self, timeout=10.0):
+    def handshake(self, timeout=30.0):
         stop_time = time.time() + timeout
         # handshake
         send_port = random.randrange(2000, 30000)
