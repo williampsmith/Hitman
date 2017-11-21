@@ -39,16 +39,22 @@ def isTimeExceeded(p):
     return ICMP in p and p[IP][ICMP].type == 11
 
 def isSYNACK(p):
+    if TCP not in p:
+        return False
     f = p[IP][TCP].flags
-    return (TCP in p) and (((f & SYN) != 0) and ((f & ACK) != 0))
+    return ((f & SYN) != 0) and ((f & ACK) != 0)
 
 def isSYN(p):
+    if TCP not in p:
+        return False
     f = p[IP][TCP].flags
-    return (TCP in p) and ((f & SYN) != 0)
+    return (f & SYN) != 0
 
 def isACK(p):
+    if TCP not in p:
+        return False
     f = p[IP][TCP].flags
-    return (TCP in p) and ((f & ACK) != 0)
+    return (f & ACK) != 0
 
 # A general python object to handle a lot of this stuff...
 #
@@ -209,7 +215,7 @@ class PacketUtils:
             if random.randint(0, 1) == 0:
                 pkt = self.send_pkt(
                     payload=payload,
-                    flags="PA",
+                    flags="A",
                     seq=send_seq + seq_offset,
                     ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
@@ -218,7 +224,7 @@ class PacketUtils:
                 pkt = self.send_pkt(
                     payload=rand_msg,
                     ttl=ttl,
-                    flags="PA",
+                    flags="A",
                     seq=send_seq + seq_offset,
                     ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
@@ -227,7 +233,7 @@ class PacketUtils:
                 pkt = self.send_pkt(
                     payload=rand_msg,
                     ttl=ttl,
-                    flags="PA",
+                    flags="A",
                     seq=send_seq + seq_offset,
                     ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
@@ -235,7 +241,7 @@ class PacketUtils:
 
                 pkt = self.send_pkt(
                     payload=payload,
-                    flags="PA",
+                    flags="A",
                     seq=send_seq + seq_offset,
                     ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
