@@ -358,7 +358,7 @@ class PacketUtils:
                     flags="PA",
                     # ttl=i,
                     seq=synack_pkt[IP][TCP].ack,
-                    ack=synack_pkt[IP][TCP].seq + 1,
+                    ack=synack_pkt[IP][TCP].seq,
                     sport=send_port,
                 )
 
