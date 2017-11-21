@@ -249,7 +249,7 @@ class PacketUtils:
 
         while (time.time() < stop_time):
             pkt = self.get_pkt(timeout=(stop_time - time.time()))
-            if pkt != None:
+            if pkt != None and not isICMP(pkt):
                 if 'Raw' in pkt:
                     result += pkt['Raw'].load
 
