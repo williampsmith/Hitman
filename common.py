@@ -311,7 +311,6 @@ class PacketUtils:
 
         return "LIVE"
 
-
     # Format is
     # ([], [])
     # The first list is the list of IPs that have a hop
@@ -322,26 +321,25 @@ class PacketUtils:
         ips = []
         resets = []
 
+        # handshake
+        send_port = random.randrange(2000, 30000)
+        send_seq = random.randint(1, 31313131)
+        synack_pkt = None
+        while synack_pkt == None:
+            syn_pkt = self.send_pkt(
+                flags="S",
+                seq=send_seq,
+                sport=send_port,
+            )
+            synack_pkt = self.get_pkt(timeout=10)
+            while synack_pkt != None and not (
+                isSYNACK(synack_pkt) and
+                synack_pkt[IP][TCP].ack == send_seq + 1
+            ):
+                synack_pkt = self.get_pkt()
+
         # traceroute packets
         for i in range(hops + 1):
-            # handshake
-            send_port = random.randrange(2000, 30000)
-            send_seq = random.randint(1, 31313131)
-            synack_pkt = None
-            while synack_pkt == None:
-                syn_pkt = self.send_pkt(
-                    flags="S",
-                    seq=send_seq,
-                    sport=send_port,
-                )
-                synack_pkt = self.get_pkt(timeout=10)
-                while synack_pkt != None and not (
-                    isSYNACK(synack_pkt) and
-                    synack_pkt[IP][TCP].ack == send_seq + 1
-                ):
-                    synack_pkt = self.get_pkt()
-            # end handshake
-            
             # empty packet queue between hops
             while not self.packetQueue.empty():
                 self.get_pkt()
