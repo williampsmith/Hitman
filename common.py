@@ -339,20 +339,7 @@ class PacketUtils:
             ):
                 synack_pkt = self.get_pkt()
 
-        # # final handshake ack
-        # pkt = self.send_pkt(
-        #     payload="p",
-        #     flags="PA",
-        #     ttl=32,
-        #     seq=synack_pkt[IP][TCP].ack,
-        #     ack=synack_pkt[IP][TCP].seq + 1,
-        #     sport=send_port,
-        # )
-
         # traceroute packets
-        reply_pkt = synack_pkt
-        seq_offset = reply_pkt[IP][TCP].ack
-        ack_offset = reply_pkt[IP][TCP].seq + 1
         for i in range(hops + 1):
             # empty packet queue between hops
             while not self.packetQueue.empty():
@@ -362,22 +349,21 @@ class PacketUtils:
                     payload=triggerfetch,
                     flags="PA",
                     ttl=i,
-                    seq=seq_offset,
-                    ack=ack_offset,
+                    seq=synack_pkt[IP][TCP].ack,
+                    ack=synack_pkt[IP][TCP].seq + 1,
                     sport=send_port,
                 )
 
+            # empty packet queue
             reset_returned = False
             icmp_ip = None
             next_pkt = self.get_pkt(timeout=10)
-
             while next_pkt != None:
                 if isTimeExceeded(next_pkt):
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
                 else:
                     print('NON-ICMP PACKET RECEIVED. ACK: %s' % (next_pkt[IP][TCP].seq + 1))
-                    reply_pkt = next_pkt
 
                 if isRST(next_pkt):
                     reset_returned = True
