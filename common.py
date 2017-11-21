@@ -328,13 +328,14 @@ class PacketUtils:
         ips = []
         resets = []
 
-        send_port, synack_pkt = self.handshake()
+        # send_port, synack_pkt = self.handshake()
 
         # traceroute packets
         for i in range(hops + 1):
             # empty packet queue between hops
             # while not self.packetQueue.empty():
             self.get_pkt(timeout=5)
+            send_port, synack_pkt = self.handshake()
             # print("seq sent", synack_pkt[IP][TCP].ack)
             # print("ack sent", synack_pkt[IP][TCP].seq + 1)
             for j in range(3):
@@ -367,17 +368,18 @@ class PacketUtils:
             ips.append(icmp_ip)
             resets.append(reset_returned)
 
-            if reset_returned:
-                send_port, synack_pkt = self.handshake()
+            # if reset_returned:
+            #     send_port, synack_pkt = self.handshake()
 
         return (ips, resets)
 
-    def handshake(self):
+    def handshake(self, timeout=10.0):
+        stop_time = time.time() + timeout
         # handshake
         send_port = random.randrange(2000, 30000)
         send_seq = random.randint(1, 31313131)
         synack_pkt = None
-        while synack_pkt == None:
+        while (synack_pkt == None) and (time.time() < stop_time):
             syn_pkt = self.send_pkt(
                 flags="S",
                 seq=send_seq,
@@ -390,5 +392,8 @@ class PacketUtils:
             ):
                 synack_pkt = self.get_pkt()
 
+        if synack_pkt == None:
+            return None, None
+        
         return send_port, synack_pkt
 
