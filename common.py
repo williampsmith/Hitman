@@ -390,9 +390,5 @@ class PacketUtils:
 
             ips.append(icmp_ip)
             resets.append(reset_returned)
-            # early exit once we get a RST (firewall)
-            # TODO: check this
-            if reset_returned:
-                break
 
         return (ips, resets)
