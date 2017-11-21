@@ -374,11 +374,11 @@ class PacketUtils:
             next_pkt = self.get_pkt(timeout=10)
 
             while next_pkt != None:
-                print('Received packet with ack %s' % (next_pkt[IP][TCP].seq + 1))
                 if isTimeExceeded(next_pkt):
                     icmp_ip = next_pkt[IP].src
                     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
                 else:
+                    print('NON-ICMP PACKET RECEIVED WITH ACK %s' % (next_pkt[IP][TCP].seq + 1))
                     # ack_offset += 1
                     reply_pkt = next_pkt
 
