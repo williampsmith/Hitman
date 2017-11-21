@@ -14,8 +14,8 @@ maxhop = 25
 # A request that will trigger the great firewall but will NOT cause
 # the web server to process the connection.  You probably want it here
 
-triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
-# triggerfetch = "GET / HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
+# triggerfetch = "GET /search?q=Falun+Gong HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
+triggerfetch = "GET / HTTP/1.1\r\nhost: www.google.com\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www.miit.gov.cn\r\n\r\n"
 # triggerfetch = "GET / HTTP/1.1\r\nhost: www-inst.eecs.berkeley.edu\r\nconnection: close\r\n\r\n"
@@ -246,16 +246,6 @@ class PacketUtils:
                 )
 
             seq_offset += len(payload)
-
-        # pkt = self.get_pkt()
-        # if pkt != None:
-        #     self.send_pkt(
-        #         flags="A",
-        #         ttl=32,
-        #         seq=pkt[IP][TCP].ack,
-        #         ack=pkt[IP][TCP].seq + 1,
-        #         sport=send_port,
-        #     )
 
         # Get data in first 5 seconds
         result = ''
