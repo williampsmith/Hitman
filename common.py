@@ -183,27 +183,10 @@ class PacketUtils:
     # server itself (from a previous traceroute incantation
     def evade(self, target, msg, ttl):
         # print("ttl", ttl)
-        send_port = random.randrange(2000, 30000)
-        send_seq = random.randint(1, 31313131)
-        syn_pkt = self.send_pkt(
-            flags="S",
-            seq=send_seq,
-            sport=send_port,
-        )
-        synack_pkt = self.get_pkt()
-        while synack_pkt != None and not (
-            isSYNACK(synack_pkt) and
-            synack_pkt[IP][TCP].ack == send_seq + 1
-        ):
-            synack_pkt = self.get_pkt()
+        send_port, send_seq, synack_pkt = self.handshake()
+        if synack_pkt is None:
+            return None
 
-        # pkt = self.send_pkt(
-        #     ttl=32,
-        #     flags="A",
-        #     seq=synack_pkt[IP][TCP].ack,
-        #     ack=synack_pkt[IP][TCP].seq + 1,
-        #     sport=send_port,
-        # )
         # print(synack_pkt)
         seq_offset = 1
         chunk_size = 2
@@ -277,21 +260,9 @@ class PacketUtils:
     # "FIREWALL" if it is behind the Great Firewall
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
-        send_port = random.randrange(2000, 30000)
-        send_seq = random.randint(1, 31313131)
-        syn_pkt = self.send_pkt(
-            flags="S",
-            seq=send_seq,
-            sport=send_port,
-        )
-        synack_pkt = self.get_pkt()
-        while synack_pkt != None and not (
-            isSYNACK(synack_pkt) and
-            synack_pkt[IP][TCP].ack == send_seq + 1
-        ):
-            synack_pkt = self.get_pkt()
+        send_port, send_seq, synack_pkt = self.handshake()
 
-        if synack_pkt == None or isTimeExceeded(synack_pkt):
+        if synack_pkt is None:
             return "DEAD"
 
         ack_pkt = self.send_pkt(
@@ -328,14 +299,19 @@ class PacketUtils:
         ips = []
         resets = []
 
-        # send_port, synack_pkt = self.handshake()
+        # send_port, _, synack_pkt = self.handshake()
+        # if synack_pkt is None:
+        #     return (ips, resets)
 
         # traceroute packets
         for i in range(hops + 1):
             # empty packet queue between hops
-            # while not self.packetQueue.empty():
-            self.get_pkt(timeout=5)
-            send_port, synack_pkt = self.handshake()
+            while not self.packetQueue.empty():
+                pkt = self.get_pkt(timeout=5)
+
+            send_port, _, synack_pkt = self.handshake()
+            if synack_pkt is None:
+                return (ips, resets)
             # print("seq sent", synack_pkt[IP][TCP].ack)
             # print("ack sent", synack_pkt[IP][TCP].seq + 1)
             for j in range(3):
@@ -369,7 +345,9 @@ class PacketUtils:
             resets.append(reset_returned)
 
             # if reset_returned:
-            #     send_port, synack_pkt = self.handshake()
+            #     send_port, _, synack_pkt = self.handshake()
+            # if synack_pkt is None:
+            #     return (ips, resets)
 
         return (ips, resets)
 
@@ -379,7 +357,7 @@ class PacketUtils:
         send_port = random.randrange(2000, 30000)
         send_seq = random.randint(1, 31313131)
         synack_pkt = None
-        while (synack_pkt == None) and (time.time() < stop_time):
+        while (synack_pkt is None) and (time.time() < stop_time):
             syn_pkt = self.send_pkt(
                 flags="S",
                 seq=send_seq,
@@ -392,8 +370,8 @@ class PacketUtils:
             ):
                 synack_pkt = self.get_pkt()
 
-        if synack_pkt == None:
-            return None, None
-        
-        return send_port, synack_pkt
+        if synack_pkt is None:
+            return None, None, None
+
+        return send_port, send_seq, synack_pkt
 
