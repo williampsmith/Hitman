@@ -191,8 +191,6 @@ class PacketUtils:
         seq_offset = 1
         chunk_size = 2
         letters = "abcdefghijklmnopqrstuvwxyz"
-        print(msg)
-        print(len(msg))
         while len(msg) > 0:
             payload = msg[:chunk_size]
             msg = msg[chunk_size:]
@@ -235,8 +233,6 @@ class PacketUtils:
                     )
             else:
                 # Make sure the terminating new line characters get delivered
-                print(msg)
-                print(payload)
                 pkt = self.send_pkt(
                     payload=payload,
                     flags="PA",
