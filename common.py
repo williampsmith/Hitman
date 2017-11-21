@@ -271,8 +271,7 @@ class PacketUtils:
 
         stop_time = time.time() + 5.0
         synack_pkt = self.get_pkt(timeout=5)
-        while (time.time() < stop_time) and
-            synack_pkt != None and not (
+        while (time.time() < stop_time) and synack_pkt != None and not (
             isSYNACK(synack_pkt) and
             synack_pkt[IP][TCP].ack == send_seq + 1
             ):
