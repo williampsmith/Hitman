@@ -260,9 +260,28 @@ class PacketUtils:
     # "FIREWALL" if it is behind the Great Firewall
     def ping(self, target):
         # self.send_msg([triggerfetch], dst=target, syn=True)
-        send_port, send_seq, synack_pkt = self.handshake()
+        send_port = random.randrange(2000, 30000)
+        send_seq = random.randint(1, 31313131)
 
-        if synack_pkt is None:
+        syn_pkt = self.send_pkt(
+            flags="S",
+            seq=send_seq,
+            sport=send_port,
+        )
+
+        stop_time = time.time() + 5.0
+        synack_pkt = self.get_pkt(timeout=5)
+        while (time.time() < stop_time) and
+            synack_pkt != None and not (
+            isSYNACK(synack_pkt) and
+            synack_pkt[IP][TCP].ack == send_seq + 1
+            ):
+            synack_pkt = self.get_pkt(timeout=stop_time - time.time())
+
+        if synack_pkt is None or not (
+            isSYNACK(synack_pkt) and
+            synack_pkt[IP][TCP].ack == send_seq + 1
+            ):
             return "DEAD"
 
         ack_pkt = self.send_pkt(
@@ -274,18 +293,19 @@ class PacketUtils:
             sport=send_port,
         )
 
+        stop_time = time.time() + 5.0
         reply_pkt = self.get_pkt()
         if reply_pkt == None:
             return "DEAD"
 
         rst_returned = False
         live_handshake = False
-        while reply_pkt != None:
+        while (time.time() < stop_time) and (reply_pkt != None):
             if isRST(reply_pkt):
                 rst_returned = True
             elif not isICMP(reply_pkt):
                 live_handshake = True
-            reply_pkt = self.get_pkt()
+            reply_pkt = self.get_pkt(timeout=stop_time - time.time())
 
         if rst_returned:
             return "FIREWALL"
