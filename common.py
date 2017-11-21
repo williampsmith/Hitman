@@ -356,7 +356,7 @@ class PacketUtils:
             send_port, synack_pkt = self.handshake()
             # print("seq sent", synack_pkt[IP][TCP].ack)
             # print("ack sent", synack_pkt[IP][TCP].seq + 1)
-            for j in range(1):
+            for j in range(3):
                 pkt = self.send_pkt(
                     payload=triggerfetch,
                     flags="PA",
