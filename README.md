@@ -18,7 +18,8 @@ pinging the provided destination host IP with the suspected censored data.
 
 `$ sudo python ping.py`
 
-> SIP IP 172.26.9.210, iface eth0, netmask 255.255.240.0, enet 06:ed:1d:58:b8:c2
+```
+SIP IP 172.26.9.210, iface eth0, netmask 255.255.240.0, enet 06:ed:1d:58:b8:c2
 Gateway 172.26.0.1
 Ethernet destination 06:5d:b0:be:f6:0c
 Sniffer started
@@ -28,6 +29,7 @@ Sent 1 packets.
 .
 Sent 1 packets.
 FIREWALL
+```
 
 ### Analysis
 In the analysis phase, we can infer information about the relative location of
@@ -81,7 +83,8 @@ argument to `evade.py` is the hop count.
 
 `$ sudo python evade.py 20`
 
-> SIP IP 172.26.9.210, iface eth0, netmask 255.255.240.0, enet 06:ed:1d:58:b8:c2
+```
+SIP IP 172.26.9.210, iface eth0, netmask 255.255.240.0, enet 06:ed:1d:58:b8:c2
 Gateway 172.26.0.1
 Ethernet destination 06:5d:b0:be:f6:0c
 Sniffer started
@@ -102,13 +105,14 @@ Expires: 0
 Cache-control: private
 Content-Length: 300
 
-> Sorry, Page Not Found HTTP/1.1 404 Not Found
+Sorry, Page Not Found HTTP/1.1 404 Not Found
 Date: Wed, 22 Nov 2017 07:21:33 GMT
 Server: Apache
 Content-Length: 208
 Keep-Alive: timeout=5, max=91
 Connection: Keep-Alive
 Content-Type: text/html; charset=iso-8859-1
+```
 
 ```html
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
