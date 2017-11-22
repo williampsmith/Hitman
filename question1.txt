@@ -1,5 +1,5 @@
-What is the TTL of the real replies from the server:  INSERT_HERE
+What is the TTL of the real replies from the server:  64
 
-What is the TTL of the injected packets from the Great Firewall:  INSERT_HERE
+What is the TTL of the injected packets from the Great Firewall:  209
 
-How many RST packets did the Great Firewall inject:  INSERT_HERE
+How many RST packets did the Great Firewall inject:  3
