@@ -1,6 +1,9 @@
 # HITMAN
 
-![alt text](https://github.com/williampsmith/Hitman/blob/master/Assets/hitman.png =150x)
+<p align="center">
+  <img src="https://github.com/williampsmith/Hitman/blob/master/Assets/hitman.png" width=200>
+  <br/>
+</p>
 
 
 ## Hitman provides reliable TCP/IP communication and detection in the presence of
