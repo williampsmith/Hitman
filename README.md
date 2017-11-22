@@ -43,9 +43,9 @@ packet was received.
 NON-ICMP PACKET RECEIVED. ACK: 2002169909
 RST PACKET RECEIVED
 ICMP PACKET RECEIVED. IP: 219.158.112.45
-  .
-  .
-  .
+.
+.
+.
   1:   None
   2:   None
   3:   None
@@ -100,7 +100,7 @@ Expires: 0
 Cache-control: private
 Content-Length: 300
 
-> Sorry, Page Not FoundHTTP/1.1 404 Not Found
+> Sorry, Page Not Found HTTP/1.1 404 Not Found
 Date: Wed, 22 Nov 2017 07:21:33 GMT
 Server: Apache
 Content-Length: 208
@@ -108,7 +108,8 @@ Keep-Alive: timeout=5, max=91
 Connection: Keep-Alive
 Content-Type: text/html; charset=iso-8859-1
 
-> <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+```html
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html><head>
 <title>404 Not Found</title>
 </head><body>
@@ -122,3 +123,4 @@ Content-Length: 208
 Keep-Alive: timeout=5, max=91
 Connection: Keep-Alive
 Content-Type: text/html; charset=iso-8859-1
+```
