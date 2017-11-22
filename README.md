@@ -74,7 +74,20 @@ ICMP PACKET RECEIVED. IP: 219.158.112.45
  ```
 
 ### Evasion
-Evasion is obtained by passing in the hop count at which we suspect the censorship
+Evasion is obtained as follows:
+
+1. Enter the message payload in `msg.txt`. In the below example we send the
+following HTTP request:
+
+`$ cat msg.txt`
+
+```
+GET /Falun+Gong HTTP/1.1
+host: www.google.com
+connection: keep-alive
+```
+
+2. Run the below command for evade.py, passing in the hop count at which we suspect the censorship
 device to be located on path, as found in the analysis step. Shown below, the
 argument to `evade.py` is the hop count.
 
