@@ -39,7 +39,8 @@ packet was received.
 
 `$ sudo python traceroute.py`
 
-> ICMP PACKET RECEIVED. IP: 219.158.112.45
+```
+ICMP PACKET RECEIVED. IP: 219.158.112.45
 NON-ICMP PACKET RECEIVED. ACK: 2002169909
 RST PACKET RECEIVED
 ICMP PACKET RECEIVED. IP: 219.158.112.45
@@ -71,6 +72,7 @@ ICMP PACKET RECEIVED. IP: 219.158.112.45
  23: * 219.158.112.45
  24: * 202.96.12.82
  25: * 219.158.112.45
+ ```
 
 ### Evasion
 Evasion is obtained by passing in the hop count at which we suspect the censorship
