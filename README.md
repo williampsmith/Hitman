@@ -1,14 +1,10 @@
-# HITMAN
-
 <p align="center">
   <img src="https://github.com/williampsmith/Hitman/blob/master/Assets/hitman.png" width=250>
   <br/>
 </p>
+# HITMAN
 
-
-## Hitman provides reliable TCP/IP communication and detection in the presence of
-on-path connection reset censorship technologies and firewalls, such as the
-Great Firewall of China.
+### Hitman provides reliable TCP/IP communication and detection in the presence of on-path connection reset censorship technologies and firewalls, such as the Great Firewall of China.
 
 ## Usage
 
