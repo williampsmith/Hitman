@@ -1,7 +1,7 @@
 # HITMAN
 
 <p align="center">
-  <img src="https://github.com/williampsmith/Hitman/blob/master/Assets/hitman.png" width=200>
+  <img src="https://github.com/williampsmith/Hitman/blob/master/Assets/hitman.png" width=250>
   <br/>
 </p>
 
