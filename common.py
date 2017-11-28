@@ -356,13 +356,13 @@ class PacketUtils:
             while next_pkt != None:
                 if isTimeExceeded(next_pkt):
                     icmp_ip = next_pkt[IP].src
-                    print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
-                else:
-                    print('NON-ICMP PACKET RECEIVED. ACK: %s' % (next_pkt[IP][TCP].seq + 1))
+                #     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
+                # else:
+                #     print('NON-ICMP PACKET RECEIVED. ACK: %s' % (next_pkt[IP][TCP].seq + 1))
 
                 if isRST(next_pkt):
                     reset_returned = True
-                    print('RST PACKET RECEIVED')
+                    # print('RST PACKET RECEIVED')
 
                 next_pkt = self.get_pkt(timeout=5)
 
