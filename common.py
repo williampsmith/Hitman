@@ -364,7 +364,7 @@ class PacketUtils:
                     reset_returned = True
                     # print('RST PACKET RECEIVED')
 
-                next_pkt = self.get_pkt(timeout=10)
+                next_pkt = self.get_pkt(timeout=5)
 
             ips.append(icmp_ip)
             resets.append(reset_returned)
