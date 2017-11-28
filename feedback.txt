@@ -1,1 +1,29 @@
-The main problem with this project was the lack of intro to the useful terminal commands in the case of the first question and it would have helped to give us a brief tutorial on how to use the tools needed. There was also some uncertainty in the spec, such as what the 5 second timeout means; does it refer to total time or does it refer to the default timeout to listen for packets. In addition, the spec does not go into detail about the expected responses that we should be seeing for traceroute and evasion so it was difficult to judge completion of those parts.
+The main problem with this project was the lack of intro to the useful terminal
+commands in the case of the first question and it would have helped to give us a
+ brief tutorial on how to use the tools needed. There was also some uncertainty in the spec,
+ such as what the 5 second timeout means; does it refer to total time or does it
+ refer to the default timeout to listen for packets. In addition, the spec does
+ not go into detail about the expected responses that we should be seeing for
+ traceroute and evasion so it was difficult to judge completion of those parts.
+
+ The hardest part of the project was being able to differentiate between desired
+ behavior from the firewall or from the PCAP file contents, as opposed to behavior
+ indicative of a bug in our code. This was compounded by the fact that the firewall
+ behavior was not always completely consistent (e.g., it would sometimes send the RST
+ packet after the server had already responded). In terms of understanding, there
+ was a hurdle to get over in terms of network understanding, although we personally
+ found this to be a great learning experience with respect to the difficulties of
+ real TCP layer programming and raw packet construction.
+
+ The hardest part in terms of effort for us was part 3, the traceroute function,
+ mainly due to issues of not understanding correct behavior, as stated above, which
+ caused a significant time commitment. The hardest part in terms of understanding
+ was learning all of the command line tools effectively in order to complete the
+ project, although, again, we found this part to be very useful.
+
+ Overall, we do not believe the project to have been a failure, as we personally
+ see great utility in dealing with real systems with real issues and difficulties.
+ However, a significantly more robust introduction to the tools, the correct behaviour,
+ and setting up our environments reliably with respect to the network we would be
+ utilizing (behind a NAT, locally at home, on ec2, etc.) would go a long way
+ into making this project tractable and enjoyable for the next semester of students.
