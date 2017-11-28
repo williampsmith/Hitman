@@ -13,9 +13,9 @@
 Detection of an on-path connection reset censorship technology is obtained by
 pinging the provided destination host IP with the suspected censored data.
 
-`$ sudo python ping.py`
-
 ```
+$ sudo python ping.py
+
 SIP IP 172.26.9.210, iface eth0, netmask 255.255.240.0, enet 06:ed:1d:58:b8:c2
 Gateway 172.26.0.1
 Ethernet destination 06:5d:b0:be:f6:0c
@@ -36,9 +36,9 @@ the IP is of the switch at hop `i`, or `None` if it cannot be determined, or the
 packet never reaches hop `i`. An `*` is appended to all IP's for which a RST
 packet was received.
 
-`$ sudo python traceroute.py`
-
 ```
+$ sudo python traceroute.py
+
 ICMP PACKET RECEIVED. IP: 219.158.112.45
 NON-ICMP PACKET RECEIVED. ACK: 2002169909
 RST PACKET RECEIVED
@@ -79,9 +79,9 @@ Evasion is obtained as follows:
 1. Enter the message payload in `msg.txt`. In the below example we send the
 following HTTP request:
 
-`$ cat msg.txt`
-
 ```
+$ cat msg.txt
+
 GET /Falun+Gong HTTP/1.1
 host: www.google.com
 connection: keep-alive
@@ -91,9 +91,9 @@ connection: keep-alive
 device to be located on path, as found in the analysis step. Shown below, the
 argument to `evade.py` is the hop count.
 
-`$ sudo python evade.py 20`
-
 ```
+$ sudo python evade.py 20
+
 SIP IP 172.26.9.210, iface eth0, netmask 255.255.240.0, enet 06:ed:1d:58:b8:c2
 Gateway 172.26.0.1
 Ethernet destination 06:5d:b0:be:f6:0c
