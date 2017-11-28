@@ -1,4 +1,4 @@
-What is the TTL of the real replies from the server:  64
+What is the TTL of the real replies from the server:  101
 
 What is the TTL of the injected packets from the Great Firewall:  209
 
