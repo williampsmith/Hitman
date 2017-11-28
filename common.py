@@ -353,11 +353,8 @@ class PacketUtils:
             reset_returned = False
             icmp_ip = None
             next_pkt = self.get_pkt(timeout=5)
-            ttl = []
             while next_pkt != None:
                 if isTimeExceeded(next_pkt):
-                    # ttl.append(next_pkt[IP][ICMP].ttl)
-                    ttl.append(next_pkt['Raw'].load)
                     icmp_ip = next_pkt[IP].src
                 #     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
                 # else:
@@ -367,9 +364,8 @@ class PacketUtils:
                     reset_returned = True
                     # print('RST PACKET RECEIVED')
 
-                next_pkt = self.get_pkt(timeout=5)
-            print("hop:", i)
-            print(ttl)
+                next_pkt = self.get_pkt(timeout=10)
+
             ips.append(icmp_ip)
             resets.append(reset_returned)
 
