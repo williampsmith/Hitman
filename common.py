@@ -303,7 +303,7 @@ class PacketUtils:
             if isRST(reply_pkt):
                 rst_returned = True
                 break
-            elif not isICMP(reply_pkt):
+            elif not isTimeExceeded(reply_pkt):
                 live_handshake = True
             reply_pkt = self.get_pkt(timeout=stop_time - time.time())
 
