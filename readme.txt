@@ -1,9 +1,11 @@
-To test first login to ec2 instance or vm, then open two terminals and n each run:
-telnet www.nsae.miit.gov.cn 80
-
+To test first login to ec2 instance or vm, then open two terminals and in each run:
+Terminal 1:
 en0 or eth0 depending on what ifconfig says is the interface
 sudo tcpdump -vv -i en0 host www.nsae.miit.gov.cn
 sudo tcpdump -vv -i eth0 host www.nsae.miit.gov.cn
+
+Terminal 2:
+telnet www.nsae.miit.gov.cn 80
 
 Get requests to try:
 GET /search?q=Falun%20Gong HTTP/1.1
