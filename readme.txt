@@ -25,8 +25,10 @@ connection: keep-alive
 host: www.facebook.com
 
 More information:
+To send DSN request for facebook.com to 202.106.121.6 enter into terminal:
 dig www.facebook.com @202.106.121.6
-Send DSN request for facebook.com to 202.106.121.6
+
+To make TCP handshake and send request:
 
 telnet {server} 80
 telnet www.nsae.miit.gov.cn 80
@@ -36,6 +38,7 @@ host: www.google.com
 
 gives you a TCP connection to the web server in question on port 80.  You can run this in your VM or on your own computer outside the VM.
 
+To sniff packets: TCPdump
 You can also then capture packets with TCPdump  {man TCPDump for details}
 TCPdump you run at the same time as telnet, since the goal is to capture the packets you send.
 RST packets have the R flag set.
