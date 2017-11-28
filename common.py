@@ -355,8 +355,8 @@ class PacketUtils:
             next_pkt = self.get_pkt(timeout=5)
             ttl = []
             while next_pkt != None:
-                ttl.append(next_pkt[IP].ttl)
                 if isTimeExceeded(next_pkt):
+                    ttl.append(next_pkt[IP][ICMP].ttl)
                     icmp_ip = next_pkt[IP].src
                 #     print('ICMP PACKET RECEIVED. IP: %s' % icmp_ip)
                 # else:
